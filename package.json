@@ -19,6 +19,6 @@
     "poolz-helper-v2": "^2.0.3",
     "truffle-plugin-verify": "^0.5.7"
   },
-  "name": "poolz-boutique",
+  "name": "poolz-registration",
   "version": "1.0.0"
 }
