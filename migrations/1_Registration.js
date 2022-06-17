@@ -1,5 +1,5 @@
 const Registration = artifacts.require("Registration.sol");
 
-module.exports = function (deployer) {
+export default function (deployer) {
   deployer.deploy(Registration);
 };
