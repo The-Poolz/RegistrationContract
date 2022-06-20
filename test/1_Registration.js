@@ -9,6 +9,6 @@ contract("Testing Registration Company", accounts => {
     })
 
     it('only the owner has control rights', async () => {
-
+        
     })
 })
