@@ -7,6 +7,7 @@ contract RegistrationData {
     mapping(uint256 => string) public Keys;
     mapping(uint256 => string) public Values;
     mapping(uint256 => RegistrationPool) public RegistrationPools;
+    mapping(uint256 => Company) public Companies;
 
     uint256 TotalPools;
     uint256 TotalKeys;
@@ -20,13 +21,13 @@ contract RegistrationData {
         address Owner;
         bool IsActive; 
         FeeBaseHelper FeeProvider;
-        mapping(uint256 => Company) Companies;
         uint256 TotalCompanies;
     }
 
     struct Company {
         uint256 PoolId;
         uint256 CompanyId;
-        Parameter[] Parameters;
+        string[] Keys;
+        string[] Values;
     }
 }

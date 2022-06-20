@@ -10,10 +10,11 @@ import "./RegistrationData.sol";
 
 contract RegistrationManageable is RegistrationData, GovManager, ETHHelper, ERC20Helper {
     event NewRegistration(
-        Parameter[] Parameters,
+        Company RegisteredCompany,
+        string[] Keys,
+        string[] Values,
         uint256 ParamsLength,
-        uint256 Price,
-        Company RegisteredCompany
+        uint256 Price
     );
 
     event NewRegistrationPoolCreated(
@@ -35,7 +36,7 @@ contract RegistrationManageable is RegistrationData, GovManager, ETHHelper, ERC2
     }
 
     function PayComission(uint256 _poolId) internal isCorrectPoolId(_poolId) {
-        RegistrationPool storage pool = RegistrationPools[_poolId];
+        RegistrationPool memory pool = RegistrationPools[_poolId];
         pool.FeeProvider.PayFee(pool.FeeProvider.Fee());
     }
 
@@ -47,10 +48,11 @@ contract RegistrationManageable is RegistrationData, GovManager, ETHHelper, ERC2
         RegistrationPools[++TotalPools] = RegistrationPool(
             msg.sender,
             true,
-            new FeeBaseHelper()
+            new FeeBaseHelper(),
+            0
         );
 
-        RegistrationPool storage newPool = RegistrationPools[TotalPools];
+        RegistrationPool memory newPool = RegistrationPools[TotalPools];
 
         SetPrice(TotalPools, _fee, _token);
 
@@ -64,36 +66,28 @@ contract RegistrationManageable is RegistrationData, GovManager, ETHHelper, ERC2
     
     function Register(
         uint256 _poolId, 
-        string[] memory _parameters, 
+        string[] memory _keys, 
         string[] memory _values
         ) 
         public payable 
         isCorrectPoolId(_poolId)
     {
-        require(_parameters.length > 0 && _values.length > 0, 
-                "Parameters and values arrays must have elements.");
-        require(_parameters.length == _values.length, "Parameters and values arrays length must be equal.");
+        require(_keys.length > 0 && _values.length > 0, 
+                "Keys and values arrays must have elements.");
+        require(_keys.length == _values.length, "Keys and values arrays length must be equal.");
 
         RegistrationPool storage pool = RegistrationPools[_poolId];
         pool.FeeProvider.PayFee(pool.FeeProvider.Fee());
 
-        Parameter[] storage parameters;
-
-        for (uint256 i = 0; i < _parameters.length; i++) {
-            parameters[i] = Parameter(_parameters[i], _values[i]);
-        }
-
-        require(parameters.length == _parameters.length, 
-                "New parameter and previos parameter arrays length must be equal.");
-        uint256 companiesAmount = RegistrationPools[_poolId].TotalCompanies;
-        RegistrationPools[_poolId].Companies[++companiesAmount] = Company(
-            _poolId,
-            parameters,
-            companiesAmount
+        uint256 totalCompanies = ++RegistrationPools[_poolId].TotalCompanies;
+        Companies[totalCompanies] = Company(
+            _poolId, 
+            totalCompanies,
+            _keys,
+            _values
         );
-        RegistrationPools[_poolId].TotalCompanies++;
 
-        emit NewRegistration(parameters, parameters.length, pool.FeeProvider.Fee());
+        emit NewRegistration(Companies[totalCompanies], _keys, _values, _keys.length, pool.FeeProvider.Fee());
     }
 
 
@@ -108,7 +102,7 @@ contract RegistrationManageable is RegistrationData, GovManager, ETHHelper, ERC2
     {
         require(_poolId > 0, "Incorrect pool id.");
 
-        RegistrationPool storage pool = RegistrationPools[_poolId];
+        RegistrationPool memory pool = RegistrationPools[_poolId];
         if (pool.FeeProvider.FeeToken() != address(0)) {
             pool.FeeProvider.SetFeeToken(_token);
         }

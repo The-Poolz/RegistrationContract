@@ -1,4 +1,4 @@
-const Registration = artifacts.require("Registration")
+const RegistrationUser = artifacts.require("RegistrationUser")
 const { assert } = require('chai')
 const truffleAssert = require('truffle-assertions')
 
