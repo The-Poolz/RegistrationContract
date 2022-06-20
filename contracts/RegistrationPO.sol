@@ -12,6 +12,9 @@ contract RegistrationPO is RegistrationManageable {
       isCorrectPoolId(_poolId)
       returns(uint256) 
    {
+      PayComission(_poolId);
+      Keys[++TotalKeys] = _key;
 
+      return TotalKeys;
    }
 }
