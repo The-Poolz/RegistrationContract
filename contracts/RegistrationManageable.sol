@@ -90,7 +90,6 @@ contract RegistrationManageable is RegistrationData, GovManager, ETHHelper, ERC2
         emit NewRegistration(Companies[totalCompanies], _keys, _values, _keys.length, pool.FeeProvider.Fee());
     }
 
-
    function SetPrice(
         uint256 _poolId, 
         uint256 _price, 
