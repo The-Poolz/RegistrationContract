@@ -107,7 +107,6 @@ contract RegistrationPO is RegistrationManageable {
 
         uint256 oldPrice = pool.FeeProvider.Fee();
         pool.FeeProvider.SetFeeAmount(_price);
-        require(pool.FeeProvider.Fee() == _price, "Price was not changed.");
 
         emit RegistrationPriceChanged(_poolId, _price, oldPrice);
     }
