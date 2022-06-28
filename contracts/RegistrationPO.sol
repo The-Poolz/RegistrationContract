@@ -18,7 +18,7 @@ contract RegistrationPO is RegistrationManageable {
     );
 
     modifier isCorrectPoolId(uint256 _poolId) {
-        require(_poolId > 0, "Incorrect pool id.");
+        require(_poolId >= 0, "Incorrect pool id.");
         _;
     }
 
@@ -42,7 +42,7 @@ contract RegistrationPO is RegistrationManageable {
     ) external mustHaveElements(_keys) {
         PayFee();
         uint256[] memory companyIds;
-        RegistrationPools[++TotalPools] = RegistrationPool(
+        RegistrationPools[TotalPools++] = RegistrationPool(
             msg.sender,
             _keys,
             companyIds,

@@ -24,8 +24,8 @@ contract RegistrationUser is RegistrationPO {
         );
         pool.FeeProvider.PayFee{value: msg.value}(pool.FeeProvider.Fee());
 
-        uint256 totalCompanies = ++RegistrationPools[_poolId].TotalCompanies;
-        Companies[totalCompanies] = Company(_poolId, totalCompanies, _values);
+        uint256 totalCompanies = RegistrationPools[_poolId].TotalCompanies++;
+        Companies[totalCompanies] = Company(_poolId, totalCompanies + 1, _values);
         pool.CompaniesId.push(totalCompanies);
 
         emit NewRegistration(
