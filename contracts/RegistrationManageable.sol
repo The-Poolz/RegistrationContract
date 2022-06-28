@@ -10,16 +10,36 @@ import "./RegistrationData.sol";
 
 contract RegistrationManageable is RegistrationData, FeeHelper, ETHHelper {
     event PoolCreationPriceChanged(uint256 NewPrice, uint256 OldPrice);
+    event PoolCreationTokenChanged(address NewToken, address OldToken);
 
-    function SetPoolCreationPrice(address _token, uint256 _price)
+    modifier isCorrectTokenAddress(address _token) {
+        require(_token != address(0), "Invalid token address.");
+        _;
+    }
+
+    modifier isCorrectPrice(uint256 _price) {
+        require(_price >= 0, "Price must be equal or greater than zero.");
+        _;
+    }
+
+    function SetTokenPoolCreation(address _token)
         external
         onlyOwnerOrGov
+        isCorrectTokenAddress(_token)
+    {
+        address oldToken = BaseFee.FeeToken();
+        SetToken(_token);
+        require(BaseFee.FeeToken() == _token, "Token was not set.");
+
+        emit PoolCreationTokenChanged(_token, oldToken);
+    }
+
+    function SetPoolCreationPrice(uint256 _price)
+        external
+        onlyOwnerOrGov
+        isCorrectPrice(_price)
     {
         uint256 oldPrice = BaseFee.Fee();
-
-        if (_token != address(0)) {
-            SetToken(_token);
-        }
         SetFee(_price);
         require(BaseFee.Fee() == _price, "Price was not changed.");
 

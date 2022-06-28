@@ -8,6 +8,7 @@ contract RegistrationUser is RegistrationPO {
         Company RegisteredCompany,
         string[] Values,
         uint256 ValuesAmount,
+        uint256 CompanyId,
         uint256 Price
     );
 
@@ -24,15 +25,17 @@ contract RegistrationUser is RegistrationPO {
         );
         pool.FeeProvider.PayFee{value: msg.value}(pool.FeeProvider.Fee());
 
-        uint256 totalCompanies = RegistrationPools[_poolId].TotalCompanies++;
-        Companies[totalCompanies] = Company(_poolId, totalCompanies + 1, _values);
+        uint256 totalCompanies = RegistrationPools[_poolId].TotalCompanies;
+        Companies[totalCompanies] = Company(_poolId, totalCompanies, _values);
         pool.CompaniesId.push(totalCompanies);
 
         emit NewRegistration(
             Companies[totalCompanies],
             _values,
             _values.length,
+            pool.CompaniesId[pool.CompaniesId.length - 1],
             pool.FeeProvider.Fee()
         );
+        RegistrationPools[_poolId].TotalCompanies++;
     }
 }

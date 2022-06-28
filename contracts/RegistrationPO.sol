@@ -11,14 +11,23 @@ contract RegistrationPO is RegistrationManageable {
         uint256 Fee
     );
 
-    event RegistrationPriceChanged(
+    event RegistrationTokenChanged(
         uint256 PoolId,
-        address Token,
-        uint256 NewPrice
+        address NewToken,
+        address OldToken
     );
 
+    event RegistrationPriceChanged(
+        uint256 PoolId,
+        uint256 NewPrice,
+        uint256 OldPrice
+    );
+
+    event RegistrationPoolActivated(uint256 PoolId);
+    event RegistrationPoolDeactivated(uint256 PoolId);
+
     modifier isCorrectPoolId(uint256 _poolId) {
-        require(_poolId >= 0, "Incorrect pool id.");
+        require(_poolId >= 0 && _poolId < TotalPools, "Incorrect pool id.");
         _;
     }
 
@@ -30,8 +39,16 @@ contract RegistrationPO is RegistrationManageable {
         _;
     }
 
-   modifier mustHaveElements(string[] memory data) {
+    modifier mustHaveElements(string[] memory data) {
         require(data.length > 0, "Data array must have elements.");
+        _;
+    }
+
+    modifier validateStatus(uint256 _poolId, bool _status) {
+        require(
+            RegistrationPools[_poolId].IsActive == _status,
+            "Pool already has the same status."
+        );
         _;
     }
 
@@ -42,7 +59,7 @@ contract RegistrationPO is RegistrationManageable {
     ) external mustHaveElements(_keys) {
         PayFee();
         uint256[] memory companyIds;
-        RegistrationPools[TotalPools++] = RegistrationPool(
+        RegistrationPools[TotalPools] = RegistrationPool(
             msg.sender,
             _keys,
             companyIds,
@@ -50,9 +67,22 @@ contract RegistrationPO is RegistrationManageable {
             new FeeBaseHelper(),
             0
         );
-
-        SetRegisterPrice(TotalPools, _token, _fee);
         RegistrationPool memory newPool = RegistrationPools[TotalPools];
+
+        if (_token != address(0)) {
+            newPool.FeeProvider.SetFeeToken(_token);
+            require(
+                newPool.FeeProvider.FeeToken() == _token,
+                "Token was not set."
+            );
+        }
+        if (_fee != 0) {
+            newPool.FeeProvider.SetFeeAmount(_fee);
+            require(
+                newPool.FeeProvider.Fee() == _fee,
+                "Price was not changed."
+            );
+        }
 
         emit NewRegistrationPoolCreated(
             TotalPools,
@@ -60,20 +90,54 @@ contract RegistrationPO is RegistrationManageable {
             newPool.FeeProvider.FeeToken(),
             newPool.FeeProvider.Fee()
         );
+        TotalPools++;
     }
 
-    function SetRegisterPrice(
-        uint256 _poolId,
-        address _token,
-        uint256 _price
-    ) public onlyPoolOwner(_poolId) isCorrectPoolId(_poolId) {
+    function SetRegisterToken(uint256 _poolId, address _token)
+        external
+        onlyPoolOwner(_poolId)
+        isCorrectPoolId(_poolId)
+    {
         RegistrationPool memory pool = RegistrationPools[_poolId];
-        if (pool.FeeProvider.FeeToken() != address(0)) {
-            pool.FeeProvider.SetFeeToken(_token);
-        }
+
+        address oldToken = pool.FeeProvider.FeeToken();
+        pool.FeeProvider.SetFeeToken(_token);
+        require(pool.FeeProvider.FeeToken() == _token, "Token was not set.");
+
+        emit RegistrationTokenChanged(_poolId, _token, oldToken);
+    }
+
+    function SetRegisterPrice(uint256 _poolId, uint256 _price)
+        external
+        onlyPoolOwner(_poolId)
+        isCorrectPoolId(_poolId)
+    {
+        RegistrationPool memory pool = RegistrationPools[_poolId];
+
+        uint256 oldPrice = pool.FeeProvider.Fee();
         pool.FeeProvider.SetFeeAmount(_price);
         require(pool.FeeProvider.Fee() == _price, "Price was not changed.");
 
-        emit RegistrationPriceChanged(_poolId, _token, _price);
+        emit RegistrationPriceChanged(_poolId, _price, oldPrice);
+    }
+
+    function ActivatePool(uint256 _poolId)
+        external
+        isCorrectPoolId(_poolId)
+        onlyPoolOwner(_poolId)
+        validateStatus(_poolId, false)
+    {
+        RegistrationPools[_poolId].IsActive = true;
+        emit RegistrationPoolActivated(_poolId);
+    }
+
+    function DeactivatePool(uint256 _poolId)
+        external
+        isCorrectPoolId(_poolId)
+        onlyPoolOwner(_poolId)
+        validateStatus(_poolId, true)
+    {
+        RegistrationPools[_poolId].IsActive = false;
+        emit RegistrationPoolDeactivated(_poolId);
     }
 }
