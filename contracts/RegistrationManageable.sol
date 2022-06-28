@@ -27,7 +27,6 @@ contract RegistrationManageable is RegistrationData, FeeHelper {
     {
         address oldToken = BaseFee.FeeToken();
         SetToken(_token);
-        require(BaseFee.FeeToken() == _token, "Token was not set.");
 
         emit PoolCreationTokenChanged(_token, oldToken);
     }
@@ -39,7 +38,6 @@ contract RegistrationManageable is RegistrationData, FeeHelper {
     {
         uint256 oldPrice = BaseFee.Fee();
         SetFee(_price);
-        require(BaseFee.Fee() == _price, "Price was not changed.");
 
         emit PoolCreationPriceChanged(_price, oldPrice);
     }
