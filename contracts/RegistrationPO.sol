@@ -71,17 +71,9 @@ contract RegistrationPO is RegistrationManageable {
 
         if (_token != address(0)) {
             newPool.FeeProvider.SetFeeToken(_token);
-            require(
-                newPool.FeeProvider.FeeToken() == _token,
-                "Token was not set."
-            );
         }
         if (_fee != 0) {
             newPool.FeeProvider.SetFeeAmount(_fee);
-            require(
-                newPool.FeeProvider.Fee() == _fee,
-                "Price was not changed."
-            );
         }
 
         emit NewRegistrationPoolCreated(
@@ -102,7 +94,6 @@ contract RegistrationPO is RegistrationManageable {
 
         address oldToken = pool.FeeProvider.FeeToken();
         pool.FeeProvider.SetFeeToken(_token);
-        require(pool.FeeProvider.FeeToken() == _token, "Token was not set.");
 
         emit RegistrationTokenChanged(_poolId, _token, oldToken);
     }
