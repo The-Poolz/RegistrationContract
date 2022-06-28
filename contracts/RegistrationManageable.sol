@@ -2,13 +2,11 @@
 pragma solidity ^0.8.0;
 
 import "poolz-helper-v2/contracts/ERC20Helper.sol";
-import "poolz-helper-v2/contracts/ETHHelper.sol";
-import "poolz-helper-v2/contracts/GovManager.sol";
 import "poolz-helper-v2/contracts/FeeHelper.sol";
 
 import "./RegistrationData.sol";
 
-contract RegistrationManageable is RegistrationData, FeeHelper, ETHHelper {
+contract RegistrationManageable is RegistrationData, FeeHelper {
     event PoolCreationPriceChanged(uint256 NewPrice, uint256 OldPrice);
     event PoolCreationTokenChanged(address NewToken, address OldToken);
 

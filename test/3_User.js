@@ -43,9 +43,9 @@ contract("User actions", accounts => {
 
         it('should register paying fee in ETH', async () => {
             const tx = await instance.Register(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2], value: fee });
-            const pid = tx.logs[1].args.RegisteredCompany.PoolId;
-            const cid = tx.logs[1].args.RegisteredCompany.CompanyId;
-            const companyId = tx.logs[1].args.CompanyId;
+            const pid = tx.logs[0].args.RegisteredCompany.PoolId;
+            const cid = tx.logs[0].args.RegisteredCompany.CompanyId;
+            const companyId = tx.logs[0].args.CompanyId;
             assert.equal(pid, poolId);
             assert.equal(cid, companyId);
         });
