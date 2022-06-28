@@ -41,9 +41,11 @@ contract RegistrationPO is RegistrationManageable {
         uint256 _fee
     ) external mustHaveElements(_keys) {
         PayFee();
+        uint256[] memory companyIds;
         RegistrationPools[++TotalPools] = RegistrationPool(
             msg.sender,
             _keys,
+            companyIds,
             true,
             new FeeBaseHelper(),
             0
