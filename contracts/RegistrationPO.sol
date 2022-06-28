@@ -67,7 +67,7 @@ contract RegistrationPO is RegistrationManageable {
             new FeeBaseHelper(),
             0
         );
-        RegistrationPool memory newPool = RegistrationPools[TotalPools];
+        RegistrationPool storage newPool = RegistrationPools[TotalPools];
 
         if (_token != address(0)) {
             newPool.FeeProvider.SetFeeToken(_token);
@@ -90,7 +90,7 @@ contract RegistrationPO is RegistrationManageable {
         onlyPoolOwner(_poolId)
         isCorrectPoolId(_poolId)
     {
-        RegistrationPool memory pool = RegistrationPools[_poolId];
+        RegistrationPool storage pool = RegistrationPools[_poolId];
 
         address oldToken = pool.FeeProvider.FeeToken();
         pool.FeeProvider.SetFeeToken(_token);
@@ -103,7 +103,7 @@ contract RegistrationPO is RegistrationManageable {
         onlyPoolOwner(_poolId)
         isCorrectPoolId(_poolId)
     {
-        RegistrationPool memory pool = RegistrationPools[_poolId];
+        RegistrationPool storage pool = RegistrationPools[_poolId];
 
         uint256 oldPrice = pool.FeeProvider.Fee();
         pool.FeeProvider.SetFeeAmount(_price);
