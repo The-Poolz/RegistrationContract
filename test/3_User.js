@@ -43,9 +43,9 @@ contract("User actions", accounts => {
 
         it('should register paying fee in ETH', async () => {
             const tx = await instance.Register(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2], value: fee });
-            const pid = tx.logs[0].args.RegisteredCompany.PoolId;
-            const cid = tx.logs[0].args.RegisteredCompany.CompanyId;
-            const companyId = tx.logs[0].args.CompanyId;
+            const pid = tx.logs[1].args.RegisteredCompany.PoolId;
+            const cid = tx.logs[1].args.RegisteredCompany.CompanyId;
+            const companyId = tx.logs[1].args.CompanyId;
             assert.equal(pid, poolId);
             assert.equal(cid, companyId);
         });
@@ -69,8 +69,7 @@ contract("User actions", accounts => {
             const tx = await instance.CreateNewRegistrationPool(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
             poolId3 = tx.logs[1].args.PoolId.toString();
             await Token.transfer(accounts[3], fee, { from: ownerAddress });
-            const baseFee = await instance.BaseFee();
-            await Token.approve(baseFee, fee, { from: accounts[3] });
+            await Token.approve(instance.address, fee, { from: accounts[3] });
         });
 
         it('should register paying fee in ERC20', async () => {
@@ -78,9 +77,9 @@ contract("User actions", accounts => {
             await Token.transfer(accounts[4], fee, { from: ownerAddress });
             await Token.approve(result['FeeProvider'], fee, { from: accounts[4] });
             const tx = await instance.Register(poolId3, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4] });
-            const pid = tx.logs[0].args.RegisteredCompany.PoolId;
-            const cid = tx.logs[0].args.RegisteredCompany.CompanyId;
-            const companyId = tx.logs[0].args.CompanyId;
+            const pid = tx.logs[1].args.RegisteredCompany.PoolId;
+            const cid = tx.logs[1].args.RegisteredCompany.CompanyId;
+            const companyId = tx.logs[1].args.CompanyId;
             assert.equal(pid, poolId3);
             assert.equal(cid, companyId);
         });
@@ -92,8 +91,7 @@ contract("User actions", accounts => {
 
         it('should register when fee is 0', async () => {
             await Token.transfer(accounts[6], fee, { from: ownerAddress });
-            const baseFee = await instance.BaseFee();
-            await Token.approve(baseFee, fee, { from: accounts[6] });
+            await Token.approve(instance.address, fee, { from: accounts[6] });
             const tx = await instance.CreateNewRegistrationPool(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], 0, { from: ownerAddress });
             const poolId = tx.logs[1].args.PoolId.toString();
             const tx2 = await instance.Register(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[6] });
