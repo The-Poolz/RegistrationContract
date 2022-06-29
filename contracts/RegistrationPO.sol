@@ -1,32 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./RegistrationManageable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
+import "./RegistrationModifiers.sol";
 
-contract RegistrationPO is RegistrationManageable, Pausable {
-    event NewRegistrationPoolCreated(
-        uint256 PoolId,
-        address Owner,
-        address TokenFee,
-        uint256 Fee
-    );
-
-    event RegistrationTokenChanged(
-        uint256 PoolId,
-        address NewToken,
-        address OldToken
-    );
-
-    event RegistrationPriceChanged(
-        uint256 PoolId,
-        uint256 NewPrice,
-        uint256 OldPrice
-    );
-
-    event RegistrationPoolActivated(uint256 PoolId);
-    event RegistrationPoolDeactivated(uint256 PoolId);
-
+contract RegistrationPO is MultiSigModifiers, FeeBaseHelper {
     function CreateNewRegistrationPool(
         address _token,
         string[] memory _keys,
@@ -53,6 +31,7 @@ contract RegistrationPO is RegistrationManageable, Pausable {
 
         emit NewRegistrationPoolCreated(
             TotalPools,
+            _keys,
             newPool.Owner,
             newPool.FeeProvider.FeeToken(),
             newPool.FeeProvider.Fee()
@@ -66,11 +45,7 @@ contract RegistrationPO is RegistrationManageable, Pausable {
         isCorrectPoolId(_poolId)
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
-
-        address oldToken = pool.FeeProvider.FeeToken();
         pool.FeeProvider.SetFeeToken(_token);
-
-        emit RegistrationTokenChanged(_poolId, _token, oldToken);
     }
 
     function SetRegisterPrice(uint256 _poolId, uint256 _price)
@@ -79,11 +54,12 @@ contract RegistrationPO is RegistrationManageable, Pausable {
         isCorrectPoolId(_poolId)
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
-
-        uint256 oldPrice = pool.FeeProvider.Fee();
         pool.FeeProvider.SetFeeAmount(_price);
+    }
 
-        emit RegistrationPriceChanged(_poolId, _price, oldPrice);
+    function WithdrawPoolFee(uint256 _poolId) external onlyPoolOwner(_poolId) {
+        FeeBaseHelper PoolFee = RegistrationPools[_poolId].FeeProvider;
+        PoolFee.WithdrawFee(payable(RegistrationPools[_poolId].Owner));
     }
 
     function ActivatePool(uint256 _poolId)
@@ -104,13 +80,5 @@ contract RegistrationPO is RegistrationManageable, Pausable {
     {
         RegistrationPools[_poolId].IsActive = false;
         emit RegistrationPoolDeactivated(_poolId);
-    }
-
-    function Pause(uint256 _poolId) external onlyPoolOwner(_poolId) {
-        _pause();
-    }
-
-    function Unpause(uint256 _poolId) external onlyPoolOwner(_poolId) {
-        _unpause();
     }
 }

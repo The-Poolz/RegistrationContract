@@ -4,20 +4,12 @@ pragma solidity ^0.8.0;
 import "./RegistrationPO.sol";
 
 contract RegistrationUser is RegistrationPO {
-    event NewRegistration(
-        Company RegisteredCompany,
-        string[] Values,
-        uint256 ValuesAmount,
-        uint256 CompanyId,
-        uint256 Price
-    );
-
     function Register(uint256 _poolId, string[] memory _values)
         external
         payable
-        whenNotPaused
         isCorrectPoolId(_poolId)
         mustHaveElements(_values)
+        validateStatus(_poolId, true)
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
         require(
@@ -31,11 +23,8 @@ contract RegistrationUser is RegistrationPO {
         pool.CompaniesId.push(totalCompanies);
 
         emit NewRegistration(
-            Companies[totalCompanies],
-            _values,
-            _values.length,
-            pool.CompaniesId[pool.CompaniesId.length - 1],
-            pool.FeeProvider.Fee()
+            RegistrationPools[_poolId].TotalCompanies,
+            _values
         );
         RegistrationPools[_poolId].TotalCompanies++;
     }

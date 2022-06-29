@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "poolz-helper-v2/contracts/ERC20Helper.sol";
-import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
+import "./RegistrationEvents.sol";
 
-import "./RegistrationData.sol";
-
-contract RegistrationManageable is RegistrationData, FeeBaseHelper {
+/// @title contains all modifiers and stores variables.
+contract MultiSigModifiers is RegistrationEvents {
     modifier isCorrectPoolId(uint256 _poolId) {
-        require(_poolId >= 0 && _poolId < TotalPools, "Incorrect pool id.");
+        require(_poolId < TotalPools, "Incorrect pool id.");
         _;
     }
 
