@@ -15,6 +15,7 @@ contract RegistrationUser is RegistrationPO {
     function Register(uint256 _poolId, string[] memory _values)
         external
         payable
+        whenNotPaused
         isCorrectPoolId(_poolId)
         mustHaveElements(_values)
     {
