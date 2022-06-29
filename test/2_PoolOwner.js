@@ -2,6 +2,7 @@ const RegistrationUser = artifacts.require("RegistrationUser");
 const { assert } = require('chai');
 const truffleAssert = require('truffle-assertions');
 const TestToken = artifacts.require("ERC20Token");
+const FeeBaseHelper = artifacts.require("FeeBaseHelper");
 const constants = require('@openzeppelin/test-helpers/src/constants.js');
 const BigNumber = require('bignumber.js');
 
@@ -50,11 +51,10 @@ contract("Admin settings", accounts => {
 
         it('should set register token', async () => {
             const tx = await instance.SetRegisterToken(poolId, Token.address);
-            const newToken = tx.logs[0].args.NewToken;
-            const oldToken = tx.logs[0].args.OldToken;
-            const pid = tx.logs[0].args.PoolId;
-            assert.equal(newToken, Token.address);
-            assert.equal(poolId, pid);
+            const result = await instance.RegistrationPools(poolId);
+            const feeBalAddr = result.FeeProvider;
+            baseFee = await FeeBaseHelper.at(feeBalAddr);
+            assert.equal(await baseFee.FeeToken(), Token.address);
         });
     });
 

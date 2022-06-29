@@ -6,7 +6,7 @@ import "./RegistrationEvents.sol";
 /// @title contains all modifiers and stores variables.
 contract MultiSigModifiers is RegistrationEvents {
     modifier isCorrectPoolId(uint256 _poolId) {
-        require(_poolId >= 0 && _poolId < TotalPools, "Incorrect pool id.");
+        require(_poolId < TotalPools, "Incorrect pool id.");
         _;
     }
 

@@ -7,28 +7,12 @@ import "./RegistrationData.sol";
 contract RegistrationEvents is RegistrationData {
     event NewRegistrationPoolCreated(
         uint256 PoolId,
+        string[] Keys,
         address Owner,
         address TokenFee,
         uint256 Fee
     );
-    event RegistrationTokenChanged(
-        uint256 PoolId,
-        address NewToken,
-        address OldToken
-    );
-    event RegistrationPriceChanged(
-        uint256 PoolId,
-        uint256 NewPrice,
-        uint256 OldPrice
-    );
-    event NewRegistration(
-        Company RegisteredCompany,
-        string[] Values,
-        uint256 ValuesAmount,
-        uint256 CompanyId,
-        uint256 Price
-    );
-
+    event NewRegistration(uint256 CompanyId, string[] Values);
     event RegistrationPoolActivated(uint256 PoolId);
     event RegistrationPoolDeactivated(uint256 PoolId);
 }

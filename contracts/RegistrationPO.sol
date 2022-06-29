@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./RegistrationManageable.sol";
+import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
+import "./RegistrationModifiers.sol";
 
-contract RegistrationPO is RegistrationManageable {
+contract RegistrationPO is MultiSigModifiers, FeeBaseHelper {
     function CreateNewRegistrationPool(
         address _token,
         string[] memory _keys,
@@ -30,6 +31,7 @@ contract RegistrationPO is RegistrationManageable {
 
         emit NewRegistrationPoolCreated(
             TotalPools,
+            _keys,
             newPool.Owner,
             newPool.FeeProvider.FeeToken(),
             newPool.FeeProvider.Fee()
@@ -43,11 +45,7 @@ contract RegistrationPO is RegistrationManageable {
         isCorrectPoolId(_poolId)
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
-
-        address oldToken = pool.FeeProvider.FeeToken();
         pool.FeeProvider.SetFeeToken(_token);
-
-        emit RegistrationTokenChanged(_poolId, _token, oldToken);
     }
 
     function SetRegisterPrice(uint256 _poolId, uint256 _price)
@@ -56,11 +54,7 @@ contract RegistrationPO is RegistrationManageable {
         isCorrectPoolId(_poolId)
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
-
-        uint256 oldPrice = pool.FeeProvider.Fee();
         pool.FeeProvider.SetFeeAmount(_price);
-
-        emit RegistrationPriceChanged(_poolId, _price, oldPrice);
     }
 
     function WithdrawPoolFee(uint256 _poolId) external onlyPoolOwner(_poolId) {
