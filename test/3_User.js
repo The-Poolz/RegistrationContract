@@ -101,7 +101,5 @@ contract("User actions", accounts => {
             assert.equal(pid, poolId);
             assert.equal(cid, companyId);
         });
-
-
     });
 });

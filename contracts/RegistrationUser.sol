@@ -4,20 +4,21 @@ pragma solidity ^0.8.0;
 import "./RegistrationPO.sol";
 
 contract RegistrationUser is RegistrationPO {
-    event NewRegistration(
-        Company RegisteredCompany,
-        string[] Values,
-        uint256 ValuesAmount,
-        uint256 CompanyId,
-        uint256 Price
-    );
+    modifier validateSender() {
+        require(
+            msg.sender == tx.origin && !_isContract(msg.sender),
+            "Some thing wrong with the msgSender"
+        );
+        _;
+    }
 
     function Register(uint256 _poolId, string[] memory _values)
         external
         payable
-        whenNotPaused
         isCorrectPoolId(_poolId)
         mustHaveElements(_values)
+        validateStatus(_poolId, true)
+        validateSender
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
         require(
@@ -38,5 +39,13 @@ contract RegistrationUser is RegistrationPO {
             pool.FeeProvider.Fee()
         );
         RegistrationPools[_poolId].TotalCompanies++;
+    }
+
+    function _isContract(address _addr) internal view returns (bool) {
+        uint32 size;
+        assembly {
+            size := extcodesize(_addr)
+        }
+        return (size > 0);
     }
 }

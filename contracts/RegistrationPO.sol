@@ -2,31 +2,8 @@
 pragma solidity ^0.8.0;
 
 import "./RegistrationManageable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
 
-contract RegistrationPO is RegistrationManageable, Pausable {
-    event NewRegistrationPoolCreated(
-        uint256 PoolId,
-        address Owner,
-        address TokenFee,
-        uint256 Fee
-    );
-
-    event RegistrationTokenChanged(
-        uint256 PoolId,
-        address NewToken,
-        address OldToken
-    );
-
-    event RegistrationPriceChanged(
-        uint256 PoolId,
-        uint256 NewPrice,
-        uint256 OldPrice
-    );
-
-    event RegistrationPoolActivated(uint256 PoolId);
-    event RegistrationPoolDeactivated(uint256 PoolId);
-
+contract RegistrationPO is RegistrationManageable {
     function CreateNewRegistrationPool(
         address _token,
         string[] memory _keys,
@@ -86,6 +63,11 @@ contract RegistrationPO is RegistrationManageable, Pausable {
         emit RegistrationPriceChanged(_poolId, _price, oldPrice);
     }
 
+    function WithdrawPoolFee(uint256 _poolId) external onlyPoolOwner(_poolId) {
+        FeeBaseHelper PoolFee = RegistrationPools[_poolId].FeeProvider;
+        PoolFee.WithdrawFee(payable(RegistrationPools[_poolId].Owner));
+    }
+
     function ActivatePool(uint256 _poolId)
         external
         isCorrectPoolId(_poolId)
@@ -104,13 +86,5 @@ contract RegistrationPO is RegistrationManageable, Pausable {
     {
         RegistrationPools[_poolId].IsActive = false;
         emit RegistrationPoolDeactivated(_poolId);
-    }
-
-    function Pause(uint256 _poolId) external onlyPoolOwner(_poolId) {
-        _pause();
-    }
-
-    function Unpause(uint256 _poolId) external onlyPoolOwner(_poolId) {
-        _unpause();
     }
 }
