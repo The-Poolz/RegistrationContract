@@ -19,7 +19,7 @@ contract("Admin settings", accounts => {
     describe('Setting pool creation fee', async () => {
         it('should set ETH Fee', async () => {
             const fee = web3.utils.toWei('0.01', 'ether');
-            await instance.SetPoolCreationPrice(fee, { from: ownerAddress });
+            await instance.SetFeeAmount(fee, { from: ownerAddress });
             const actualFee = await instance.Fee();
             const feeToken = await instance.FeeToken();
             assert.equal(actualFee, fee);
@@ -28,8 +28,8 @@ contract("Admin settings", accounts => {
 
         it('should set/get FeeTokenAddress', async () => {
             const fee = '10000';
-            await instance.SetPoolCreationPrice(fee, { from: ownerAddress });
-            await instance.SetTokenPoolCreation(Token.address, { from: ownerAddress });
+            await instance.SetFeeAmount(fee, { from: ownerAddress });
+            await instance.SetFeeToken(Token.address, { from: ownerAddress });
             const actualFee = await instance.Fee();
             const feeToken = await instance.FeeToken();
             assert.equal(feeToken, Token.address);
