@@ -7,20 +7,29 @@ import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
 import "./RegistrationData.sol";
 
 contract RegistrationManageable is RegistrationData, FeeBaseHelper {
-    event PoolCreationPriceChanged(uint256 NewPrice, uint256 OldPrice);
-    event PoolCreationTokenChanged(address NewToken, address OldToken);
-
-    function SetTokenPoolCreation(address _token) external onlyOwnerOrGov {
-        address oldToken = FeeToken;
-        SetFeeToken(_token);
-
-        emit PoolCreationTokenChanged(_token, oldToken);
+    modifier isCorrectPoolId(uint256 _poolId) {
+        require(_poolId >= 0 && _poolId < TotalPools, "Incorrect pool id.");
+        _;
     }
 
-    function SetPoolCreationPrice(uint256 _price) external onlyOwnerOrGov {
-        uint256 oldPrice = Fee;
-        SetFeeAmount(_price);
+    modifier onlyPoolOwner(uint256 _poolId) {
+        require(
+            RegistrationPools[_poolId].Owner == msg.sender,
+            "You are not an owner of pool."
+        );
+        _;
+    }
 
-        emit PoolCreationPriceChanged(_price, oldPrice);
+    modifier mustHaveElements(string[] memory data) {
+        require(data.length > 0, "Data array must have elements.");
+        _;
+    }
+
+    modifier validateStatus(uint256 _poolId, bool _status) {
+        require(
+            RegistrationPools[_poolId].IsActive == _status,
+            "Pool already has the same status."
+        );
+        _;
     }
 }

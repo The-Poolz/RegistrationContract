@@ -26,32 +26,6 @@ contract RegistrationPO is RegistrationManageable {
     event RegistrationPoolActivated(uint256 PoolId);
     event RegistrationPoolDeactivated(uint256 PoolId);
 
-    modifier isCorrectPoolId(uint256 _poolId) {
-        require(_poolId >= 0 && _poolId < TotalPools, "Incorrect pool id.");
-        _;
-    }
-
-    modifier onlyPoolOwner(uint256 _poolId) {
-        require(
-            RegistrationPools[_poolId].Owner == msg.sender,
-            "You are not an owner of pool."
-        );
-        _;
-    }
-
-    modifier mustHaveElements(string[] memory data) {
-        require(data.length > 0, "Data array must have elements.");
-        _;
-    }
-
-    modifier validateStatus(uint256 _poolId, bool _status) {
-        require(
-            RegistrationPools[_poolId].IsActive == _status,
-            "Pool already has the same status."
-        );
-        _;
-    }
-
     function CreateNewRegistrationPool(
         address _token,
         string[] memory _keys,
