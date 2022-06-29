@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "./RegistrationManageable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 
-contract RegistrationPO is RegistrationManageable {
+contract RegistrationPO is RegistrationManageable, Pausable {
     event NewRegistrationPoolCreated(
         uint256 PoolId,
         address Owner,
@@ -129,5 +130,13 @@ contract RegistrationPO is RegistrationManageable {
     {
         RegistrationPools[_poolId].IsActive = false;
         emit RegistrationPoolDeactivated(_poolId);
+    }
+
+    function Pause(uint256 _poolId) external onlyPoolOwner(_poolId) {
+        _pause();
+    }
+
+    function Unpause(uint256 _poolId) external onlyPoolOwner(_poolId) {
+        _unpause();
     }
 }
