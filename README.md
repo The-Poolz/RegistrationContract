@@ -72,6 +72,7 @@ function SetFeeToken(address _token) public;
     // to set a new register fee token
     function SetRegisterPrice(uint256 _poolId, uint256 _price) external;
 ```
+### Flowchart
 
 ![1](https://user-images.githubusercontent.com/45734486/176641193-3f94fe05-9158-44d6-9e45-d41ccb2b58d2.png)
 
