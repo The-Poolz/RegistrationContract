@@ -4,5 +4,6 @@ package-lock.json
 # testing
 coverage
 coverage.json
+.coverage_contracts/
 # production
 build
