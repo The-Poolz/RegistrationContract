@@ -15,6 +15,7 @@ npm install
 ```console
 truffle run coverage
 ```
+
 ### Deploy
 
 ```console
@@ -62,16 +63,24 @@ function SetFeeToken(address _token) public;
 ## How to set a new fee for company registration? (only for pool owner)
    You should use the SetRegisterPrice() function to set a new register fee.
 ```solidity
-    // to set a new register fee token
+    // to set a new register fee
     function SetRegisterPrice(uint256 _poolId, uint256 _price) external;
 ```
 
-## How to set a new fee price for company registration?
-   You should use the SetRegisterPrice() function to set a new register fee price.
+## How can I deactivate registration pool? (only for pool owner)
+   You should use the DeactivatePool() function to deactivate a registration pool.
 ```solidity
-    // to set a new register fee token
-    function SetRegisterPrice(uint256 _poolId, uint256 _price) external;
+    // to deactivate registration pool
+    function DeactivatePool(uint256 _poolId) external;
 ```
+
+## How can I activate registration pool? (only for pool owner)
+   You should use the ActivatePool() function to activate a registration pool.
+```solidity
+    // to deactivate registration pool
+    function ActivatePool(uint256 _poolId) external;
+```
+
 ### Flowchart
 
 ![1](https://user-images.githubusercontent.com/45734486/176641193-3f94fe05-9158-44d6-9e45-d41ccb2b58d2.png)
