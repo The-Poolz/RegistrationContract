@@ -82,7 +82,8 @@ function SetFeeToken(address _token) public;
 ```
 
 ## How can I register a new company?
-   After than you should use the Register() function to register a new company.
+   Firstly, you need to specify a pool id and values, that will be filled in to the keys.
+   After that you should use the Register() function to register a new company.
 ```solidity
     // to register a new company
     function Register(uint256 _poolId, string[] memory _values) external payable
