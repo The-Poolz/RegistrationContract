@@ -2,14 +2,15 @@
 pragma solidity ^0.8.0;
 
 import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
-import "./RegistrationModifiers.sol";
 
-contract RegistrationPO is MultiSigModifiers, FeeBaseHelper {
+import "./RegistrationManageable.sol";
+
+contract RegistrationPO is RegistrationManageable {
     function CreateNewRegistrationPool(
         address _token,
         string[] memory _keys,
         uint256 _fee
-    ) external mustHaveElements(_keys) {
+    ) external whenNotPaused mustHaveElements(_keys) {
         PayFee(Fee);
         uint256[] memory companyIds;
         RegistrationPools[TotalPools] = RegistrationPool(
@@ -41,6 +42,7 @@ contract RegistrationPO is MultiSigModifiers, FeeBaseHelper {
 
     function SetRegisterToken(uint256 _poolId, address _token)
         external
+        whenNotPaused
         onlyPoolOwner(_poolId)
         isCorrectPoolId(_poolId)
     {
@@ -50,6 +52,7 @@ contract RegistrationPO is MultiSigModifiers, FeeBaseHelper {
 
     function SetRegisterPrice(uint256 _poolId, uint256 _price)
         external
+        whenNotPaused
         onlyPoolOwner(_poolId)
         isCorrectPoolId(_poolId)
     {
@@ -57,13 +60,18 @@ contract RegistrationPO is MultiSigModifiers, FeeBaseHelper {
         pool.FeeProvider.SetFeeAmount(_price);
     }
 
-    function WithdrawPoolFee(uint256 _poolId) external onlyPoolOwner(_poolId) {
+    function WithdrawPoolFee(uint256 _poolId)
+        external
+        whenNotPaused
+        onlyPoolOwner(_poolId)
+    {
         FeeBaseHelper PoolFee = RegistrationPools[_poolId].FeeProvider;
         PoolFee.WithdrawFee(payable(RegistrationPools[_poolId].Owner));
     }
 
     function ActivatePool(uint256 _poolId)
         external
+        whenNotPaused
         isCorrectPoolId(_poolId)
         onlyPoolOwner(_poolId)
         validateStatus(_poolId, false)
@@ -74,6 +82,7 @@ contract RegistrationPO is MultiSigModifiers, FeeBaseHelper {
 
     function DeactivatePool(uint256 _poolId)
         external
+        whenNotPaused
         isCorrectPoolId(_poolId)
         onlyPoolOwner(_poolId)
         validateStatus(_poolId, true)

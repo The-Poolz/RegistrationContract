@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "./RegistrationEvents.sol";
 
 /// @title contains all modifiers and stores variables.
-contract MultiSigModifiers is RegistrationEvents {
+contract RegistrationModifiers is RegistrationEvents {
     modifier isCorrectPoolId(uint256 _poolId) {
         require(_poolId < TotalPools, "Incorrect pool id.");
         _;
