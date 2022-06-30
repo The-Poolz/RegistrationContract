@@ -19,14 +19,11 @@ contract RegistrationUser is RegistrationPO {
         );
         pool.FeeProvider.PayFee{value: msg.value}(pool.FeeProvider.Fee());
 
-        uint256 totalCompanies = RegistrationPools[_poolId].TotalCompanies;
-        Companies[totalCompanies] = Company(_poolId, totalCompanies, _values);
-        pool.CompaniesId.push(totalCompanies);
+        Companies[TotalCompanies] = Company(_poolId, TotalCompanies, _values, _values.length);
+        pool.CompaniesId.push(TotalCompanies);
+        pool.TotalCompanies++;
 
-        emit NewRegistration(
-            RegistrationPools[_poolId].TotalCompanies,
-            _values
-        );
-        RegistrationPools[_poolId].TotalCompanies++;
+        emit NewRegistration(TotalCompanies, _values);
+        TotalCompanies++;
     }
 }

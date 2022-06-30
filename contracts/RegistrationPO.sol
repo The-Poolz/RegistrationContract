@@ -19,7 +19,8 @@ contract RegistrationPO is RegistrationManageable {
             companyIds,
             true,
             new FeeBaseHelper(),
-            0
+            0,
+            _keys.length
         );
         RegistrationPool storage newPool = RegistrationPools[TotalPools];
 
