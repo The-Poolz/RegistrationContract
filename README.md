@@ -39,10 +39,10 @@ function SetFeeToken(address _token) public;
 ```
 
 ## How to create a registration pool?
-    First of all, you should define the info keys, which users will have to fill with values.
-    In addition, you have to pay a fee, which admin set for creation a new registration pool.
-    Likewise, you can set a fee for registration a new company by user.
-    You should use the CreateNewRegistrationPool() function to create a new registration pool.
+   First of all, you should define the info keys, which users will have to fill with values.
+   In addition, you have to pay a fee, which admin set for creation a new registration pool.
+   Likewise, you can set a fee for registration a new company by user.
+   You should use the CreateNewRegistrationPool() function to create a new registration pool.
 ```solidity
     // to create a new registration pool
     function CreateNewRegistrationPool(
@@ -53,21 +53,21 @@ function SetFeeToken(address _token) public;
 ```
 
 ## How to set a new fee token for company registration? (only for pool owner)
-    You should use the SetRegisterToken() function to set a new register fee token.
+   You should use the SetRegisterToken() function to set a new register fee token.
 ```solidity
     // to set a new register fee token
     function SetRegisterToken(uint256 _poolId, address _token) external;
 ```
 
 ## How to set a new fee for company registration? (only for pool owner)
-    You should use the SetRegisterPrice() function to set a new register fee.
+   You should use the SetRegisterPrice() function to set a new register fee.
 ```solidity
     // to set a new register fee token
     function SetRegisterPrice(uint256 _poolId, uint256 _price) external;
 ```
 
 ## How to set a new fee price for company registration?
-    You should use the SetRegisterPrice() function to set a new register fee price.
+   You should use the SetRegisterPrice() function to set a new register fee price.
 ```solidity
     // to set a new register fee token
     function SetRegisterPrice(uint256 _poolId, uint256 _price) external;
