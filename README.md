@@ -25,24 +25,24 @@ truffle migrate --network dashboard
 ```
 
 ## How to set a new fee for a new registration pool creation? (only for admin)
-**1.** You should use the SetFeeAmount() function to set a new creation registration pool fee.
+You should use the SetFeeAmount() function to set a new creation registration pool fee.
 ```solidity
     // to set a new fee price
     function SetFeeAmount(uint256 _amount) public;
 ```
 
 ## How to set a new fee token for a new registration pool creation? (only for admin)
-**2.** You should use the SetFeeToken() function to set a new register fee price.
+You should use the SetFeeToken() function to set a new register fee price.
 ```solidity
     // to set a new fee price
 function SetFeeToken(address _token) public;
 ```
 
 ## How to create a registration pool?
-**3.** First of all, you should define the info keys, which users will have to fill with values.
-       In addition, you have to pay a fee, which admin set for creation a new registration pool.
-       Likewise, you can set a fee for registration a new company by user.
-   You should use the CreateNewRegistrationPool() function to create a new registration pool.
+    First of all, you should define the info keys, which users will have to fill with values.
+    In addition, you have to pay a fee, which admin set for creation a new registration pool.
+    Likewise, you can set a fee for registration a new company by user.
+    You should use the CreateNewRegistrationPool() function to create a new registration pool.
 ```solidity
     // to create a new registration pool
     function CreateNewRegistrationPool(
@@ -53,21 +53,21 @@ function SetFeeToken(address _token) public;
 ```
 
 ## How to set a new fee token for company registration? (only for pool owner)
-**4.** You should use the SetRegisterToken() function to set a new register fee token.
+    You should use the SetRegisterToken() function to set a new register fee token.
 ```solidity
     // to set a new register fee token
     function SetRegisterToken(uint256 _poolId, address _token) external;
 ```
 
 ## How to set a new fee for company registration? (only for pool owner)
-**5.** You should use the SetRegisterPrice() function to set a new register fee.
+    You should use the SetRegisterPrice() function to set a new register fee.
 ```solidity
     // to set a new register fee token
     function SetRegisterPrice(uint256 _poolId, uint256 _price) external;
 ```
 
 ## How to set a new fee price for company registration?
-**6.** You should use the SetRegisterPrice() function to set a new register fee price.
+    You should use the SetRegisterPrice() function to set a new register fee price.
 ```solidity
     // to set a new register fee token
     function SetRegisterPrice(uint256 _poolId, uint256 _price) external;
