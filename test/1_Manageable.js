@@ -35,4 +35,16 @@ contract("Admin settings", accounts => {
             assert.equal(actualFee, fee);
         });
     });
+
+    describe('Pausing contracts', async () => {
+        it('should pause the contract', async () => {
+            await instance.Pause();
+            assert.equal(await instance.paused(), true);
+        });
+
+        it('should unpause the contract', async () => {
+            await instance.Unpause();
+            assert.equal(await instance.paused(), false);
+        });
+    });
 });
