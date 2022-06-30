@@ -81,6 +81,13 @@ function SetFeeToken(address _token) public;
     function ActivatePool(uint256 _poolId) external;
 ```
 
+## How can I register a new company?
+   After than you should use the Register() function to register a new company.
+```solidity
+    // to register a new company
+    function Register(uint256 _poolId, string[] memory _values) external payable
+```
+
 ### Flowchart
 
 ![1](https://user-images.githubusercontent.com/45734486/176641193-3f94fe05-9158-44d6-9e45-d41ccb2b58d2.png)
