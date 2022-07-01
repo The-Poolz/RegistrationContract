@@ -15,4 +15,5 @@ contract RegistrationEvents is RegistrationData {
     event NewRegistration(uint256 CompanyId, string[] Values);
     event RegistrationPoolActivated(uint256 PoolId);
     event RegistrationPoolDeactivated(uint256 PoolId);
+    event CompanyValuesChanged(string[] NewValues, string[] OldValues);
 }

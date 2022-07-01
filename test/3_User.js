@@ -86,4 +86,24 @@ contract("User actions", accounts => {
             truffleAssert.eventEmitted(tx2, 'NewRegistration');
         });
     });
+
+    describe('Manipulation with data', () => {
+        const fee = '1000';
+        const newValuesArray = ["Value5", "Value4", "Value3", "Value2", "Value1"];
+
+        let poolId;
+
+        before(async () => {
+            const tx = await instance.CreateNewRegistrationPool(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
+            poolId = tx.logs[1].args.PoolId.toString();
+        });
+
+        it('should change company values', async () => {
+            const tx2 = await instance.Register(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2], value: fee });
+            const companyId = tx2.logs[1].args.CompanyId.toString();
+            await instance.EditValues(companyId, newValuesArray, { from: accounts[2] });
+            const newValues = await instance.GetValues(companyId);
+            assert.equal(newValuesArray.toString(), newValues.toString());
+        });
+    });
 });

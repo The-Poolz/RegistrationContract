@@ -19,11 +19,42 @@ contract RegistrationUser is RegistrationPO {
         );
         pool.FeeProvider.PayFee{value: msg.value}(pool.FeeProvider.Fee());
 
-        Companies[TotalCompanies] = Company(_poolId, TotalCompanies, _values, _values.length);
+        Companies[TotalCompanies] = Company(
+            msg.sender,
+            _poolId,
+            TotalCompanies,
+            _values,
+            _values.length
+        );
         pool.CompaniesId.push(TotalCompanies);
         pool.TotalCompanies++;
 
         emit NewRegistration(TotalCompanies, _values);
         TotalCompanies++;
     }
+
+    function EditValues(uint256 _companyId, string[] memory _values)
+        external
+        whenNotPaused
+        isCorrectCompanyId(_companyId)
+        mustHaveElements(_values)
+        onlyCompanyOwner(_companyId)
+    {
+        require(
+            Companies[_companyId].Values.length == _values.length,
+            "New values array must be the same length as previous."
+        );
+
+        string[] storage oldValues = Companies[_companyId].Values;
+        Companies[_companyId].Values = _values;
+
+        emit CompanyValuesChanged(oldValues, _values);
+    }
+
+    // function GetAllMyValues()
+    //     external
+    //     view
+    //     whenNotPaused
+    //     returns (string[] memory)
+    // {}
 }

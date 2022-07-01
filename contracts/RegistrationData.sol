@@ -21,6 +21,7 @@ contract RegistrationData {
     }
 
     struct Company {
+        address Owner;
         uint256 PoolId;
         uint256 CompanyId;
         string[] Values;
