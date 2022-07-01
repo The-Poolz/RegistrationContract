@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "./RegistrationPO.sol";
 
 contract RegistrationUser is RegistrationPO {
-    function Register(uint256 _poolId, string[] memory _values)
+    function SignUp(uint256 _poolId, string[] memory _values)
         external
         payable
         whenNotPaused
@@ -19,18 +19,18 @@ contract RegistrationUser is RegistrationPO {
         );
         pool.FeeProvider.PayFee{value: msg.value}(pool.FeeProvider.Fee());
 
-        Companies[TotalCompanies] = Company(
+        SignUpPools[TotalSignUps] = SignUpPool(
             msg.sender,
             _poolId,
-            TotalCompanies,
+            TotalSignUps,
             _values,
             _values.length
         );
-        pool.CompaniesId.push(TotalCompanies);
-        pool.TotalCompanies++;
+        pool.SignUpsId.push(TotalSignUps);
+        pool.TotalSignUps++;
 
-        emit NewRegistration(TotalCompanies, _values);
-        TotalCompanies++;
+        emit NewRegistration(TotalSignUps, _values);
+        TotalSignUps++;
     }
 
     function EditValues(uint256 _companyId, string[] memory _values)
@@ -38,35 +38,35 @@ contract RegistrationUser is RegistrationPO {
         whenNotPaused
         isCorrectCompanyId(_companyId)
         mustHaveElements(_values)
-        onlyCompanyOwner(_companyId)
+        onlySignUpOwner(_companyId)
     {
         require(
-            Companies[_companyId].Values.length == _values.length,
+            SignUpPools[_companyId].Values.length == _values.length,
             "New values array must be the same length as previous."
         );
 
-        string[] storage oldValues = Companies[_companyId].Values;
-        Companies[_companyId].Values = _values;
+        string[] storage oldValues = SignUpPools[_companyId].Values;
+        SignUpPools[_companyId].Values = _values;
 
-        emit CompanyValuesChanged(oldValues, _values);
+        emit SignUpValuesChanged(oldValues, _values);
     }
 
-    function GetAllMyCompanyIds() external view returns (uint256[] memory) {
+    function GetAllMySignUpIds() external view returns (uint256[] memory) {
         uint256 counter = 0;
-        for (uint256 i = 0; i < TotalCompanies; i++) {
-            if (Companies[i].Owner == msg.sender) {
+        for (uint256 i = 0; i < TotalSignUps; i++) {
+            if (SignUpPools[i].Owner == msg.sender) {
                 counter++;
             }
         }
 
-        uint256[] memory companyIds = new uint256[](counter);
+        uint256[] memory signUpIds = new uint256[](counter);
         uint256 j = 0;
-        for (uint256 i = 0; i < TotalCompanies; i++) {
-            if (Companies[i].Owner == msg.sender) {
-                companyIds[j++] = i;
+        for (uint256 i = 0; i < TotalSignUps; i++) {
+            if (SignUpPools[i].Owner == msg.sender) {
+                signUpIds[j++] = i;
             }
         }
 
-        return companyIds;
+        return signUpIds;
     }
 }

@@ -11,7 +11,7 @@ contract RegistrationModifiers is RegistrationEvents {
     }
 
     modifier isCorrectCompanyId(uint256 _companyId) {
-        require(_companyId < TotalCompanies, "Incorrect company id.");
+        require(_companyId < TotalSignUps, "Incorrect SignUpPool id.");
         _;
     }
 
@@ -23,10 +23,10 @@ contract RegistrationModifiers is RegistrationEvents {
         _;
     }
 
-    modifier onlyCompanyOwner(uint256 _companyId) {
+    modifier onlySignUpOwner(uint256 _companyId) {
         require(
-            Companies[_companyId].Owner == msg.sender,
-            "You are not an owner of company."
+            SignUpPools[_companyId].Owner == msg.sender,
+            "You are not an owner of SignUpPool."
         );
         _;
     }

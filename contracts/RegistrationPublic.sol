@@ -23,6 +23,6 @@ contract RegistrationPublic is RegistrationModifiers, Pausable {
         isCorrectCompanyId(_companyId)
         returns (string[] memory)
     {
-        return Companies[_companyId].Values;
+        return SignUpPools[_companyId].Values;
     }
 }
