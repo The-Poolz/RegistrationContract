@@ -105,5 +105,11 @@ contract("User actions", accounts => {
             const newValues = await instance.GetValues(companyId);
             assert.equal(newValuesArray.toString(), newValues.toString());
         });
+
+        it('should get all company ids of owner', async () => {
+            const result = await instance.GetAllMyCompanyIds({ from: accounts[2] });
+            assert.equal(result.length, 2);
+            assert.equal(result.toString(), [1, 4].toString());
+        });
     });
 });

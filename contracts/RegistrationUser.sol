@@ -51,10 +51,22 @@ contract RegistrationUser is RegistrationPO {
         emit CompanyValuesChanged(oldValues, _values);
     }
 
-    // function GetAllMyValues()
-    //     external
-    //     view
-    //     whenNotPaused
-    //     returns (string[] memory)
-    // {}
+    function GetAllMyCompanyIds() external view returns (uint256[] memory) {
+        uint256 counter = 0;
+        for (uint256 i = 0; i < TotalCompanies; i++) {
+            if (Companies[i].Owner == msg.sender) {
+                counter++;
+            }
+        }
+
+        uint256[] memory companyIds = new uint256[](counter);
+        uint256 j = 0;
+        for (uint256 i = 0; i < TotalCompanies; i++) {
+            if (Companies[i].Owner == msg.sender) {
+                companyIds[j++] = i;
+            }
+        }
+
+        return companyIds;
+    }
 }
