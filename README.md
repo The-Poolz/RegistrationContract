@@ -110,4 +110,4 @@ After that you should use the SignUp() function to register a new SignUp.
 
 ### Flowchart
 
-![1](https://user-images.githubusercontent.com/45734486/176641193-3f94fe05-9158-44d6-9e45-d41ccb2b58d2.png)
+![176641193-3f94fe05-9158-44d6-9e45-d41ccb2b58d2](https://user-images.githubusercontent.com/45734486/177203947-cf29161c-b766-43b8-a252-3bb2bffed136.jpg)
