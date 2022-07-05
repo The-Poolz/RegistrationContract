@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "./RegistrationModifiers.sol";
 
-/// @title contains all modifiers and stores variables.
+/// @title allows to get pool's keys or company's values
 contract RegistrationPublic is RegistrationModifiers, Pausable {
     function GetKeys(uint256 _poolId)
         external

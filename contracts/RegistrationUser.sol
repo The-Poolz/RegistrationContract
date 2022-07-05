@@ -27,7 +27,7 @@ contract RegistrationUser is RegistrationPO {
             _values.length
         );
         pool.SignUpsId.push(TotalSignUps);
-        pool.TotalSignUps++;
+        pool.UserSignUps++;
 
         emit NewRegistration(TotalSignUps, _values);
         TotalSignUps++;

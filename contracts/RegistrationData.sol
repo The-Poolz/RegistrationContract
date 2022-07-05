@@ -16,7 +16,7 @@ contract RegistrationData {
         uint256[] SignUpsId;
         bool IsActive;
         FeeBaseHelper FeeProvider;
-        uint256 TotalSignUps;
+        uint256 UserSignUps;
         uint256 TotalKeys;
     }
 
