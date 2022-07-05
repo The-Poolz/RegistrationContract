@@ -1,8 +1,9 @@
 # Registration
+
 [![Build Status](https://app.travis-ci.com/The-Poolz/RegistrationContract.svg?token=j64fMSARWGtzysprUKZK&branch=master)](https://app.travis-ci.com/The-Poolz/RegistrationContract)
 [![codecov](https://codecov.io/gh/The-Poolz/RegistrationContract/branch/master/graph/badge.svg?token=Z3HUc9AJRC)](https://codecov.io/gh/The-Poolz/RegistrationContract)
 
-The main idea of the Registration contract is to automatizate company registration process.
+The main idea of the Registration contract is to automatizate SignUpPool registration process.
 
 ### Installation
 
@@ -21,73 +22,90 @@ truffle run coverage
 ```console
 truffle dashboard
 ```
+
 ```console
 truffle migrate --network dashboard
 ```
 
 ## How to set a new fee for a new registration pool creation? (only for admin)
+
 You should use the SetFeeAmount() function to set a new creation registration pool fee.
+
 ```solidity
     // to set a new fee price
     function SetFeeAmount(uint256 _amount) public;
 ```
 
 ## How to set a new fee token for a new registration pool creation? (only for admin)
-You should use the SetFeeToken() function to set a new register fee price.
+
+You should use the SetFeeToken() function to set a new registration pool fee price.
+
 ```solidity
     // to set a new fee price
 function SetFeeToken(address _token) public;
 ```
 
 ## How to create a registration pool?
-   First of all, you should define the info keys, which users will have to fill with values.
-   In addition, you have to pay a fee, which admin set for creation a new registration pool.
-   Likewise, you can set a fee for registration a new company by user.
-   You should use the CreateNewRegistrationPool() function to create a new registration pool.
+
+First of all, you should define the info keys, which users will have to fill with values.
+In addition, you have to pay a fee, which admin set for creation a new registration pool.
+Likewise, you can set a fee for registration a new SignUp by user.
+You should use the Register() function to create a new registration pool.
+
 ```solidity
-    // to create a new registration pool
-    function CreateNewRegistrationPool(
+    // to create a new SignUp
+    function SignUp(
         address _token,
         string[] memory _keys,
         uint256 _fee
     ) external;
 ```
 
-## How to set a new fee token for company registration? (only for pool owner)
-   You should use the SetRegisterToken() function to set a new register fee token.
+## How to set a new fee token for SignUp? (only for pool owner)
+
+You should use the SetRegisterToken() function to set a new SignUp fee token.
+
 ```solidity
-    // to set a new register fee token
+    // to set a new SignUp fee token
     function SetRegisterToken(uint256 _poolId, address _token) external;
 ```
 
-## How to set a new fee for company registration? (only for pool owner)
-   You should use the SetRegisterPrice() function to set a new register fee.
+## How to set a new fee for a SignUp? (only for pool owner)
+
+You should use the SetRegisterPrice() function to set a new SignUp fee.
+
 ```solidity
-    // to set a new register fee
+    // to set a new SignUp fee
     function SetRegisterPrice(uint256 _poolId, uint256 _price) external;
 ```
 
 ## How can I deactivate registration pool? (only for pool owner)
-   You should use the DeactivatePool() function to deactivate a registration pool.
+
+You should use the DeactivatePool() function to deactivate a registration pool.
+
 ```solidity
     // to deactivate registration pool
     function DeactivatePool(uint256 _poolId) external;
 ```
 
 ## How can I activate registration pool? (only for pool owner)
-   You should use the ActivatePool() function to activate a registration pool.
+
+You should use the ActivatePool() function to activate a registration pool.
+
 ```solidity
     // to deactivate registration pool
     function ActivatePool(uint256 _poolId) external;
 ```
 
-## How can I register a new company?
-   Firstly, you need to specify a pool id and values, that will be filled in to the keys.
-   Actually, you need to pay a fee, that pool owner defined for registration a new company.
-   After that you should use the Register() function to register a new company.
+## How can I register a new SignUp?
+
+Firstly, you need to specify a pool id and values, that will be filled in to the keys.
+Actually, you need to pay a fee, that pool owner defined for a new SignUp.
+After that you should use the SignUp() function to register a new SignUp.
+
 ```solidity
-    // to register a new company
-    function Register(uint256 _poolId, string[] memory _values) external payable
+    // to register a new SignUp
+    function SignUp(uint256 _poolId, string[] memory _values) external payable
 ```
 
 ### Flowchart

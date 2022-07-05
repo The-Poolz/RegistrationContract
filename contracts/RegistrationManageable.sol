@@ -1,16 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./RegistrationModifiers.sol";
+import "./RegistrationPublic.sol";
 
-import "@openzeppelin/contracts/security/Pausable.sol";
-
-/// @title contains all modifiers and stores variables.
-contract RegistrationManageable is
-    RegistrationModifiers,
-    FeeBaseHelper,
-    Pausable
-{
+/// @title contains admin's actions
+contract RegistrationManageable is RegistrationPublic, FeeBaseHelper {
     function Pause() external onlyOwnerOrGov {
         _pause();
     }

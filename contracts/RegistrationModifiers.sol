@@ -3,10 +3,15 @@ pragma solidity ^0.8.0;
 
 import "./RegistrationEvents.sol";
 
-/// @title contains all modifiers and stores variables.
+/// @title contains all modifiers
 contract RegistrationModifiers is RegistrationEvents {
     modifier isCorrectPoolId(uint256 _poolId) {
         require(_poolId < TotalPools, "Incorrect pool id.");
+        _;
+    }
+
+    modifier isCorrectSignUpId(uint256 _signUpId) {
+        require(_signUpId < TotalSignUps, "Incorrect SignUpPool id.");
         _;
     }
 
@@ -14,6 +19,14 @@ contract RegistrationModifiers is RegistrationEvents {
         require(
             RegistrationPools[_poolId].Owner == msg.sender,
             "You are not an owner of pool."
+        );
+        _;
+    }
+
+    modifier onlySignUpOwner(uint256 _signUpId) {
+        require(
+            SignUpPools[_signUpId].Owner == msg.sender,
+            "You are not an owner of SignUpPool."
         );
         _;
     }

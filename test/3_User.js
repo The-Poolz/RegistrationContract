@@ -19,14 +19,14 @@ contract("User actions", accounts => {
     before(async () => {
         instance = await RegistrationUser.new();
         Token = await TestToken.new('TestToken', 'TEST');
-        const tx = await instance.CreateNewRegistrationPool(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], price, { from: ownerAddress });
+        const tx = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], price, { from: ownerAddress });
         poolId = tx.logs[1].args.PoolId.toString();
-        const tx2 = await instance.CreateNewRegistrationPool(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], feePrice, { from: ownerAddress });
+        const tx2 = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], feePrice, { from: ownerAddress });
         poolId2 = tx2.logs[1].args.PoolId.toString();
     });
 
-    it('Register when fee is zero', async () => {
-        const tx = await instance.Register(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: user1 });
+    it('SignUp when fee is zero', async () => {
+        const tx = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: user1 });
         truffleAssert.eventEmitted(tx, 'NewRegistration');
     });
 
@@ -37,53 +37,79 @@ contract("User actions", accounts => {
             await instance.SetRegisterPrice(poolId, fee, { from: ownerAddress });
         });
 
-        it('should register paying fee in ETH', async () => {
-            const tx = await instance.Register(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2], value: fee });
+        it('should SignUp paying fee in ETH', async () => {
+            const tx = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2], value: fee });
             truffleAssert.eventEmitted(tx, 'NewRegistration');
         });
 
-        it('Fail to register when fee is not provided', async () => {
-            const tx = instance.Register(poolId2, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[3] });
+        it('Fail to SignUp when fee is not provided', async () => {
+            const tx = instance.SignUp(poolId2, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[3] });
             await truffleAssert.reverts(tx, 'Not Enough Fee Provided');
         });
 
-        it('Fail to register when pool does not exist', async () => {
-            const tx = instance.Register(10, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[5], value: '10' });
+        it('Fail to SignUp when pool does not exist', async () => {
+            const tx = instance.SignUp(10, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[5], value: '10' });
             truffleAssert.reverts(tx, 'Incorrect pool id.');
         });
     });
 
-    describe('Register via ERC20', () => {
+    describe('SignUp via ERC20', () => {
         const fee = '1000';
         let poolId3;
 
         before(async () => {
-            const tx = await instance.CreateNewRegistrationPool(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
+            const tx = await instance.Register(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
             poolId3 = tx.logs[1].args.PoolId.toString();
             await Token.transfer(accounts[3], fee, { from: ownerAddress });
             await Token.approve(instance.address, fee, { from: accounts[3] });
         });
 
-        it('should register paying fee in ERC20', async () => {
+        it('should SignUp paying fee in ERC20', async () => {
             const result = await instance.RegistrationPools(poolId3);
             await Token.transfer(accounts[4], fee, { from: ownerAddress });
             await Token.approve(result['FeeProvider'], fee, { from: accounts[4] });
-            const tx = await instance.Register(poolId3, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4] });
+            const tx = await instance.SignUp(poolId3, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4] });
             truffleAssert.eventEmitted(tx, 'NewRegistration');
         });
 
-        it('should fail to register when fee is not provided', async () => {
-            const tx = instance.Register(poolId2, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4] });
+        it('should fail to SignUp when fee is not provided', async () => {
+            const tx = instance.SignUp(poolId2, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4] });
             await truffleAssert.reverts(tx, 'Not Enough Fee Provided'); // revert msg from poolz-helper
         });
 
-        it('should register when fee is 0', async () => {
+        it('should SignUp when fee is 0', async () => {
             await Token.transfer(accounts[6], fee, { from: ownerAddress });
             await Token.approve(instance.address, fee, { from: accounts[6] });
-            const tx = await instance.CreateNewRegistrationPool(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], 0, { from: ownerAddress });
+            const tx = await instance.Register(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], 0, { from: ownerAddress });
             const poolId = tx.logs[1].args.PoolId.toString();
-            const tx2 = await instance.Register(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[6] });
+            const tx2 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[6] });
             truffleAssert.eventEmitted(tx2, 'NewRegistration');
+        });
+    });
+
+    describe('Manipulation with data', () => {
+        const fee = '1000';
+        const newValuesArray = ["Value5", "Value4", "Value3", "Value2", "Value1"];
+
+        let poolId;
+
+        before(async () => {
+            const tx = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
+            poolId = tx.logs[1].args.PoolId.toString();
+        });
+
+        it('should change SignUpPool values', async () => {
+            const tx2 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2], value: fee });
+            const SignUpId = tx2.logs[1].args.SignUpId.toString();
+            await instance.EditValues(SignUpId, newValuesArray, { from: accounts[2] });
+            const newValues = await instance.GetValues(SignUpId);
+            assert.equal(newValuesArray.toString(), newValues.toString());
+        });
+
+        it('should get all SignUpPool ids of owner', async () => {
+            const result = await instance.GetAllMySignUpIds({ from: accounts[2] });
+            assert.equal(result.length, 2);
+            assert.equal(result.toString(), [1, 4].toString());
         });
     });
 });

@@ -12,7 +12,8 @@ contract RegistrationEvents is RegistrationData {
         address TokenFee,
         uint256 Fee
     );
-    event NewRegistration(uint256 CompanyId, string[] Values);
+    event NewRegistration(uint256 SignUpId, string[] Values);
     event RegistrationPoolActivated(uint256 PoolId);
     event RegistrationPoolDeactivated(uint256 PoolId);
+    event SignUpValuesChanged(string[] NewValues, string[] OldValues);
 }

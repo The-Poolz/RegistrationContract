@@ -6,20 +6,21 @@ import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
 import "./RegistrationManageable.sol";
 
 contract RegistrationPO is RegistrationManageable {
-    function CreateNewRegistrationPool(
+    function Register(
         address _token,
         string[] memory _keys,
         uint256 _fee
     ) external whenNotPaused mustHaveElements(_keys) {
         PayFee(Fee);
-        uint256[] memory companyIds;
+        uint256[] memory signUpIds;
         RegistrationPools[TotalPools] = RegistrationPool(
             msg.sender,
             _keys,
-            companyIds,
+            signUpIds,
             true,
             new FeeBaseHelper(),
-            0
+            0,
+            _keys.length
         );
         RegistrationPool storage newPool = RegistrationPools[TotalPools];
 
