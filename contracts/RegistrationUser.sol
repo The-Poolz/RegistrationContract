@@ -33,20 +33,20 @@ contract RegistrationUser is RegistrationPO {
         TotalSignUps++;
     }
 
-    function EditValues(uint256 _companyId, string[] memory _values)
+    function EditValues(uint256 _signUpId, string[] memory _values)
         external
         whenNotPaused
-        isCorrectCompanyId(_companyId)
+        isCorrectSignUpId(_signUpId)
         mustHaveElements(_values)
-        onlySignUpOwner(_companyId)
+        onlySignUpOwner(_signUpId)
     {
         require(
-            SignUpPools[_companyId].Values.length == _values.length,
+            SignUpPools[_signUpId].Values.length == _values.length,
             "New values array must be the same length as previous."
         );
 
-        string[] storage oldValues = SignUpPools[_companyId].Values;
-        SignUpPools[_companyId].Values = _values;
+        string[] storage oldValues = SignUpPools[_signUpId].Values;
+        SignUpPools[_signUpId].Values = _values;
 
         emit SignUpValuesChanged(oldValues, _values);
     }

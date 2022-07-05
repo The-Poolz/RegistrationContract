@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "./RegistrationModifiers.sol";
 
-/// @title allows to get pool's keys or company's values
+/// @title allows to get pool's keys or SignUp's values
 contract RegistrationPublic is RegistrationModifiers, Pausable {
     function GetKeys(uint256 _poolId)
         external
@@ -16,13 +16,13 @@ contract RegistrationPublic is RegistrationModifiers, Pausable {
         return RegistrationPools[_poolId].Keys;
     }
 
-    function GetValues(uint256 _companyId)
+    function GetValues(uint256 _signUpId)
         external
         view
         whenNotPaused
-        isCorrectCompanyId(_companyId)
+        isCorrectSignUpId(_signUpId)
         returns (string[] memory)
     {
-        return SignUpPools[_companyId].Values;
+        return SignUpPools[_signUpId].Values;
     }
 }
