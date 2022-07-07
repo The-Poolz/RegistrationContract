@@ -45,10 +45,10 @@ contract RegistrationUser is RegistrationPO {
             "New values array must be the same length as previous."
         );
 
-        string[] storage oldValues = SignUpPools[_signUpId].Values;
+        string[] memory oldValues = SignUpPools[_signUpId].Values;
         SignUpPools[_signUpId].Values = _values;
 
-        emit SignUpValuesChanged(oldValues, _values);
+        emit SignUpValuesChanged(_values, oldValues);
     }
 
     function GetAllMySignUpIds() external view returns (uint256[] memory) {

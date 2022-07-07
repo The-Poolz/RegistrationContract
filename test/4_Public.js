@@ -18,9 +18,9 @@ contract("Admin settings", accounts => {
     describe('Getting values', async () => {
         before(async () => {
             const tx = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], 100, { from: ownerAddress });
-            poolId = tx.logs[1].args.PoolId.toString();
+            poolId = tx.logs[2].args.PoolId.toString();
             const result = await instance.RegistrationPools(poolId);
-            assert.equal(tx.logs[1].event, 'NewRegistrationPoolCreated');
+            assert.equal(tx.logs[2].event, 'NewRegistrationPoolCreated');
             assert.equal(result['IsActive'], true);
 
             const tx2 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2], value: 100 });
