@@ -22,7 +22,7 @@ contract("User actions", accounts => {
         const tx = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], price, { from: ownerAddress });
         poolId = tx.logs[1].args.PoolId.toString();
         const tx2 = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], feePrice, { from: ownerAddress });
-        poolId2 = tx2.logs[2].args.PoolId.toString();
+        poolId2 = tx2.logs[1].args.PoolId.toString();
     });
 
     it('SignUp when fee is zero', async () => {
@@ -59,7 +59,7 @@ contract("User actions", accounts => {
 
         before(async () => {
             const tx = await instance.Register(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
-            poolId3 = tx.logs[3].args.PoolId.toString();
+            poolId3 = tx.logs[1].args.PoolId.toString();
             await Token.transfer(accounts[3], fee, { from: ownerAddress });
             await Token.approve(instance.address, fee, { from: accounts[3] });
         });
@@ -81,7 +81,7 @@ contract("User actions", accounts => {
             await Token.transfer(accounts[6], fee, { from: ownerAddress });
             await Token.approve(instance.address, fee, { from: accounts[6] });
             const tx = await instance.Register(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], 0, { from: ownerAddress });
-            const poolId = tx.logs[2].args.PoolId.toString();
+            const poolId = tx.logs[1].args.PoolId.toString();
             const tx2 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[6] });
             truffleAssert.eventEmitted(tx2, 'NewRegistration');
         });
@@ -95,7 +95,7 @@ contract("User actions", accounts => {
 
         before(async () => {
             const tx = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
-            poolId = tx.logs[2].args.PoolId.toString();
+            poolId = tx.logs[1].args.PoolId.toString();
         });
 
         it('should change SignUpPool values', async () => {
