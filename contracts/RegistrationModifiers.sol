@@ -43,4 +43,9 @@ contract RegistrationModifiers is RegistrationEvents {
         );
         _;
     }
+
+    modifier sameLenghtArrays(string[] memory arr1, string[] memory arr2) {
+        require(arr1.length == arr2.length, "Both arrays must have the same length.");
+        _;
+    }
 }

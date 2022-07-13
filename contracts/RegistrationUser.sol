@@ -11,12 +11,9 @@ contract RegistrationUser is RegistrationPO {
         isCorrectPoolId(_poolId)
         mustHaveElements(_values)
         validateStatus(_poolId, true)
+        sameLenghtArrays(RegistrationPools[_poolId].Keys, _values)
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
-        require(
-            pool.Keys.length == _values.length,
-            "Values must be the same length as the keys."
-        );
         pool.FeeProvider.PayFee{value: msg.value}(pool.FeeProvider.Fee());
 
         SignUpPools[TotalSignUps] = SignUpPool(
@@ -39,12 +36,8 @@ contract RegistrationUser is RegistrationPO {
         isCorrectSignUpId(_signUpId)
         mustHaveElements(_values)
         onlySignUpOwner(_signUpId)
+        sameLenghtArrays(SignUpPools[_signUpId].Values, _values)
     {
-        require(
-            SignUpPools[_signUpId].Values.length == _values.length,
-            "New values array must be the same length as previous."
-        );
-
         string[] memory oldValues = SignUpPools[_signUpId].Values;
         SignUpPools[_signUpId].Values = _values;
 
