@@ -5,7 +5,6 @@ import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
 
 contract RegistrationData {
     mapping(uint256 => RegistrationPool) public RegistrationPools;
-
     uint256 public TotalPools;
 
     struct RegistrationPool {

@@ -6,7 +6,6 @@ import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
 import "./RegistrationManageable.sol";
 
 contract RegistrationPO is RegistrationManageable {
-    RegistrationPool[] public pools;
 
     function Register(
         address _token,
@@ -15,7 +14,7 @@ contract RegistrationPO is RegistrationManageable {
     ) external payable whenNotPaused mustHaveElements(_keys) {
         PayFee(Fee);
 
-        RegistrationPool storage newPool = pools.push();
+        RegistrationPool storage newPool = RegistrationPools[TotalPools];
         newPool.Owner = msg.sender;
         newPool.Keys = _keys;
         newPool.IsActive = true;
