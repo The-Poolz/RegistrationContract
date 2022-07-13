@@ -34,7 +34,7 @@ contract("User actions", accounts => {
         const fee = web3.utils.toWei('0.001', 'ether');
 
         before(async () => {
-            await instance.SetRegisterPrice(poolId, fee, { from: ownerAddress });
+            await instance.SetRegisterFee(poolId, constants.ZERO_ADDRESS, fee, { from: ownerAddress });
         });
 
         it('should SignUp paying fee in ETH', async () => {

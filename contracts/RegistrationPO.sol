@@ -41,7 +41,7 @@ contract RegistrationPO is RegistrationManageable {
         TotalPools++;
     }
 
-    function SetRegisterToken(uint256 _poolId, address _token)
+    function SetRegisterFee(uint256 _poolId, address _token, uint256 _price)
         external
         whenNotPaused
         onlyPoolOwner(_poolId)
@@ -49,15 +49,6 @@ contract RegistrationPO is RegistrationManageable {
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
         pool.FeeProvider.SetFeeToken(_token);
-    }
-
-    function SetRegisterPrice(uint256 _poolId, uint256 _price)
-        external
-        whenNotPaused
-        onlyPoolOwner(_poolId)
-        isCorrectPoolId(_poolId)
-    {
-        RegistrationPool storage pool = RegistrationPools[_poolId];
         pool.FeeProvider.SetFeeAmount(_price);
     }
 
