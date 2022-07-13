@@ -101,7 +101,7 @@ contract("User actions", accounts => {
         it('should change SignUpPool values', async () => {
             const tx2 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2], value: fee });
             const SignUpId = tx2.logs[1].args.SignUpId.toString();
-            await instance.EditValues(SignUpId, newValuesArray, { from: accounts[2] });
+            await instance.EditValues(poolId, SignUpId, newValuesArray, { from: accounts[2] });
             const newValues = await instance.GetValues(SignUpId);
             assert.equal(newValuesArray.toString(), newValues.toString());
         });

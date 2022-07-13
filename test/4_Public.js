@@ -9,6 +9,7 @@ contract("Admin settings", accounts => {
     let ownerAddress = accounts[0];
     let instance;
     let Token;
+    let poolId;
 
     before(async () => {
         instance = await RegistrationUser.new();
@@ -34,8 +35,9 @@ contract("Admin settings", accounts => {
         });
 
         it('should get SignUp values', async () => {
-            const companiesAmount = await instance.TotalSignUps();
-            const valuesAmount = await instance.GetValues(companiesAmount - 1);
+            const pools = await instance.RegistrationPools(poolId);
+            const companiesAmount = pools['SignUpPools'].length;
+            const valuesAmount = await instance.GetValues(poolId, companiesAmount - 1);
             const result = await instance.SignUpPools(companiesAmount - 1);
             assert.equal(result['TotalValues'], valuesAmount.length);
         });
