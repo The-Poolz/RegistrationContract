@@ -13,6 +13,7 @@ contract("Admin settings", accounts => {
     let investor = accounts[2];
     let instance;
     let Token;
+    let poolId;
 
     before(async () => {
         instance = await RegistrationUser.new();
