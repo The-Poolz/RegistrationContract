@@ -36,7 +36,7 @@ contract("Admin settings", accounts => {
 
         it('should get SignUp values', async () => {
             const pools = await instance.RegistrationPools(poolId);
-            //const companiesAmount = pools['SignUpPools'];
+            const companiesAmount = pools[3].toNumber();
             console.log(pools);
             const valuesAmount = await instance.GetValues(poolId, 2);
             const result = await instance.SignUpPools(companiesAmount - 1);
