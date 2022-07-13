@@ -6,7 +6,6 @@ import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
 import "./RegistrationManageable.sol";
 
 contract RegistrationPO is RegistrationManageable {
-
     function Register(
         address _token,
         string[] memory _keys,

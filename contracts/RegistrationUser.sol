@@ -16,14 +16,15 @@ contract RegistrationUser is RegistrationPO {
         RegistrationPool storage pool = RegistrationPools[_poolId];
         pool.FeeProvider.PayFee{value: msg.value}(pool.FeeProvider.Fee());
 
-        pool.SignUpPools[pool.UserSignUps++] = SignUpPool(
+        pool.SignUpPools[pool.UserSignUps] = SignUpPool(
             msg.sender,
             _poolId,
-            pool.UserSignUps - 1,
+            pool.UserSignUps,
             _values
         );
 
-        emit NewRegistration(_poolId, pool.UserSignUps - 1, _values);
+        emit NewRegistration(_poolId, pool.UserSignUps, _values);
+        pool.UserSignUps++;
     }
 
     function EditValues(
