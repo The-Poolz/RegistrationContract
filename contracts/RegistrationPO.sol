@@ -48,8 +48,12 @@ contract RegistrationPO is RegistrationManageable {
         isCorrectPoolId(_poolId)
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
-        pool.FeeProvider.SetFeeToken(_token);
-        pool.FeeProvider.SetFeeAmount(_price);
+        if (pool.FeeProvider.FeeToken() != _token) {
+            pool.FeeProvider.SetFeeToken(_token);
+        }
+        if (pool.FeeProvider.Fee() != _price) {
+            pool.FeeProvider.SetFeeAmount(_price);
+        }
     }
 
     function WithdrawPoolFee(uint256 _poolId)
