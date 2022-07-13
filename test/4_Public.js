@@ -36,7 +36,8 @@ contract("Admin settings", accounts => {
 
         it('should get SignUp values', async () => {
             const pools = await instance.RegistrationPools(poolId);
-            const companiesAmount = pools['SignUpPools'].length;
+            const companiesAmount = pools['SignUpPools'];
+            console.log(companiesAmount);
             const valuesAmount = await instance.GetValues(poolId, companiesAmount - 1);
             const result = await instance.SignUpPools(companiesAmount - 1);
             assert.equal(result['TotalValues'], valuesAmount.length);
