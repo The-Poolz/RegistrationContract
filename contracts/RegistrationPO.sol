@@ -21,12 +21,7 @@ contract RegistrationPO is RegistrationManageable {
         newPool.UserSignUps = 0;
         newPool.TotalKeys = _keys.length;
 
-        if (_token != address(0)) {
-            newPool.FeeProvider.SetFeeToken(_token);
-        }
-        if (_fee != 0) {
-            newPool.FeeProvider.SetFeeAmount(_fee);
-        }
+        SetRegisterFee(TotalPools, _token, _fee);
 
         emit NewRegistrationPoolCreated(
             TotalPools,
@@ -42,7 +37,7 @@ contract RegistrationPO is RegistrationManageable {
         uint256 _poolId,
         address _token,
         uint256 _price
-    ) external whenNotPaused onlyPoolOwner(_poolId) isCorrectPoolId(_poolId) {
+    ) public whenNotPaused onlyPoolOwner(_poolId) isCorrectPoolId(_poolId) {
         RegistrationPool storage pool = RegistrationPools[_poolId];
         if (pool.FeeProvider.FeeToken() != _token) {
             pool.FeeProvider.SetFeeToken(_token);
