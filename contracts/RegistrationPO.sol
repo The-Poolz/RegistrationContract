@@ -6,23 +6,22 @@ import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
 import "./RegistrationManageable.sol";
 
 contract RegistrationPO is RegistrationManageable {
+    RegistrationPool[] public pools;
+
     function Register(
         address _token,
         string[] memory _keys,
         uint256 _fee
     ) external payable whenNotPaused mustHaveElements(_keys) {
         PayFee(Fee);
-        uint256[] memory signUpIds;
-        RegistrationPools[TotalPools] = RegistrationPool(
-            msg.sender,
-            _keys,
-            signUpIds,
-            true,
-            new FeeBaseHelper(),
-            0,
-            _keys.length
-        );
-        RegistrationPool storage newPool = RegistrationPools[TotalPools];
+
+        RegistrationPool storage newPool = pools.push();
+        newPool.Owner = msg.sender;
+        newPool.Keys = _keys;
+        newPool.IsActive = true;
+        newPool.FeeProvider = new FeeBaseHelper();
+        newPool.UserSignUps = 0;
+        newPool.TotalKeys = _keys.length;
 
         if (_token != address(0)) {
             newPool.FeeProvider.SetFeeToken(_token);
@@ -41,12 +40,11 @@ contract RegistrationPO is RegistrationManageable {
         TotalPools++;
     }
 
-    function SetRegisterFee(uint256 _poolId, address _token, uint256 _price)
-        external
-        whenNotPaused
-        onlyPoolOwner(_poolId)
-        isCorrectPoolId(_poolId)
-    {
+    function SetRegisterFee(
+        uint256 _poolId,
+        address _token,
+        uint256 _price
+    ) external whenNotPaused onlyPoolOwner(_poolId) isCorrectPoolId(_poolId) {
         RegistrationPool storage pool = RegistrationPools[_poolId];
         if (pool.FeeProvider.FeeToken() != _token) {
             pool.FeeProvider.SetFeeToken(_token);

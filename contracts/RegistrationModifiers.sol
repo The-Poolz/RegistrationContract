@@ -10,8 +10,11 @@ contract RegistrationModifiers is RegistrationEvents {
         _;
     }
 
-    modifier isCorrectSignUpId(uint256 _signUpId) {
-        require(_signUpId < TotalSignUps, "Incorrect SignUpPool id.");
+    modifier isCorrectSignUpId(uint256 _poolId, uint256 _signUpId) {
+        require(
+            _signUpId < RegistrationPools[_poolId].UserSignUps,
+            "Incorrect SignUp id."
+        );
         _;
     }
 
@@ -23,10 +26,11 @@ contract RegistrationModifiers is RegistrationEvents {
         _;
     }
 
-    modifier onlySignUpOwner(uint256 _signUpId) {
+    modifier onlySignUpOwner(uint256 _poolId, uint256 _signUpId) {
         require(
-            SignUpPools[_signUpId].Owner == msg.sender,
-            "You are not an owner of SignUpPool."
+            RegistrationPools[_poolId].SignUpPools[_signUpId].Owner ==
+                msg.sender,
+            "You are not an owner of SignUp."
         );
         _;
     }
@@ -45,7 +49,10 @@ contract RegistrationModifiers is RegistrationEvents {
     }
 
     modifier sameLenghtArrays(string[] memory arr1, string[] memory arr2) {
-        require(arr1.length == arr2.length, "Both arrays must have the same length.");
+        require(
+            arr1.length == arr2.length,
+            "Both arrays must have the same length."
+        );
         _;
     }
 }
