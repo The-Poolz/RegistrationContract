@@ -39,7 +39,8 @@ contract("Admin settings", accounts => {
             const companiesAmount = pools[3].toNumber();
             console.log(pools);
             const valuesAmount = await instance.GetValues(poolId, 0);
-            const result = await instance.SignUpPools(companiesAmount - 1);
+            console.log(valuesAmount);
+            //const result = await instance.SignUpPools(companiesAmount - 1);
             assert.equal(5, valuesAmount.length);
         });
     });

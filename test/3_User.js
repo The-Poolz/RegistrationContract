@@ -108,7 +108,7 @@ contract("User actions", accounts => {
 
         it('should get all SignUpPool ids of owner', async () => {
             const result = await instance.GetAllMySignUpIds(poolId, { from: accounts[2] });
-            assert.equal(result.length, 2);
+            assert.equal(result.length, 1);
             assert.equal(result.toString(), [1, 4].toString());
         });
     });
