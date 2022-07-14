@@ -10,55 +10,40 @@ contract RegistrationPO is RegistrationManageable {
         address _token,
         string[] memory _keys,
         uint256 _fee
-    ) external whenNotPaused mustHaveElements(_keys) {
+    ) external payable whenNotPaused mustHaveElements(_keys) {
         PayFee(Fee);
-        uint256[] memory signUpIds;
-        RegistrationPools[TotalPools] = RegistrationPool(
-            msg.sender,
-            _keys,
-            signUpIds,
-            true,
-            new FeeBaseHelper(),
-            0,
-            _keys.length
-        );
-        RegistrationPool storage newPool = RegistrationPools[TotalPools];
 
-        if (_token != address(0)) {
-            newPool.FeeProvider.SetFeeToken(_token);
-        }
-        if (_fee != 0) {
-            newPool.FeeProvider.SetFeeAmount(_fee);
-        }
+        RegistrationPool storage newPool = RegistrationPools[TotalPools];
+        newPool.Owner = msg.sender;
+        newPool.Keys = _keys;
+        newPool.IsActive = true;
+        newPool.FeeProvider = new FeeBaseHelper();
+        newPool.UserSignUps = 0;
+        newPool.TotalKeys = _keys.length;
+
+        SetRegisterFee(TotalPools++, _token, _fee);
 
         emit NewRegistrationPoolCreated(
-            TotalPools,
+            TotalPools - 1,
             _keys,
             newPool.Owner,
             newPool.FeeProvider.FeeToken(),
             newPool.FeeProvider.Fee()
         );
-        TotalPools++;
     }
 
-    function SetRegisterToken(uint256 _poolId, address _token)
-        external
-        whenNotPaused
-        onlyPoolOwner(_poolId)
-        isCorrectPoolId(_poolId)
-    {
+    function SetRegisterFee(
+        uint256 _poolId,
+        address _token,
+        uint256 _price
+    ) public whenNotPaused onlyPoolOwner(_poolId) isCorrectPoolId(_poolId) {
         RegistrationPool storage pool = RegistrationPools[_poolId];
-        pool.FeeProvider.SetFeeToken(_token);
-    }
-
-    function SetRegisterPrice(uint256 _poolId, uint256 _price)
-        external
-        whenNotPaused
-        onlyPoolOwner(_poolId)
-        isCorrectPoolId(_poolId)
-    {
-        RegistrationPool storage pool = RegistrationPools[_poolId];
-        pool.FeeProvider.SetFeeAmount(_price);
+        if (pool.FeeProvider.FeeToken() != _token) {
+            pool.FeeProvider.SetFeeToken(_token);
+        }
+        if (pool.FeeProvider.Fee() != _price) {
+            pool.FeeProvider.SetFeeAmount(_price);
+        }
     }
 
     function WithdrawPoolFee(uint256 _poolId)

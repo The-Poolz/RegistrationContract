@@ -34,7 +34,7 @@ contract("User actions", accounts => {
         const fee = web3.utils.toWei('0.001', 'ether');
 
         before(async () => {
-            await instance.SetRegisterPrice(poolId, fee, { from: ownerAddress });
+            await instance.SetRegisterFee(poolId, constants.ZERO_ADDRESS, fee, { from: ownerAddress });
         });
 
         it('should SignUp paying fee in ETH', async () => {
@@ -101,15 +101,15 @@ contract("User actions", accounts => {
         it('should change SignUpPool values', async () => {
             const tx2 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2], value: fee });
             const SignUpId = tx2.logs[1].args.SignUpId.toString();
-            await instance.EditValues(SignUpId, newValuesArray, { from: accounts[2] });
-            const newValues = await instance.GetValues(SignUpId);
+            await instance.EditValues(poolId, SignUpId, newValuesArray, { from: accounts[2] });
+            const newValues = await instance.GetValues(poolId, SignUpId);
             assert.equal(newValuesArray.toString(), newValues.toString());
         });
 
         it('should get all SignUpPool ids of owner', async () => {
-            const result = await instance.GetAllMySignUpIds({ from: accounts[2] });
-            assert.equal(result.length, 2);
-            assert.equal(result.toString(), [1, 4].toString());
+            const result = await instance.GetAllMySignUpIds(poolId, { from: accounts[2] });
+            assert.equal(result.length, 1);
+            assert.equal(result.toString(), [0].toString());
         });
     });
 });

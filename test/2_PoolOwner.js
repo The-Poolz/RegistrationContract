@@ -13,6 +13,7 @@ contract("Admin settings", accounts => {
     let investor = accounts[2];
     let instance;
     let Token;
+    let poolId;
 
     before(async () => {
         instance = await RegistrationUser.new();
@@ -50,7 +51,7 @@ contract("Admin settings", accounts => {
         });
 
         it('should set SignUp token', async () => {
-            const tx = await instance.SetRegisterToken(poolId, Token.address);
+            const tx = await instance.SetRegisterFee(poolId, Token.address, 0);
             const result = await instance.RegistrationPools(poolId);
             const feeBalAddr = result.FeeProvider;
             baseFee = await FeeBaseHelper.at(feeBalAddr);

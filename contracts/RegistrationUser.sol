@@ -11,58 +11,63 @@ contract RegistrationUser is RegistrationPO {
         isCorrectPoolId(_poolId)
         mustHaveElements(_values)
         validateStatus(_poolId, true)
+        sameLenghtArrays(RegistrationPools[_poolId].Keys, _values)
     {
         RegistrationPool storage pool = RegistrationPools[_poolId];
-        require(
-            pool.Keys.length == _values.length,
-            "Values must be the same length as the keys."
-        );
         pool.FeeProvider.PayFee{value: msg.value}(pool.FeeProvider.Fee());
 
-        SignUpPools[TotalSignUps] = SignUpPool(
+        pool.SignUpPools[pool.UserSignUps] = SignUpPool(
             msg.sender,
             _poolId,
-            TotalSignUps,
-            _values,
-            _values.length
+            pool.UserSignUps,
+            _values
         );
-        pool.SignUpsId.push(TotalSignUps);
-        pool.UserSignUps++;
 
-        emit NewRegistration(TotalSignUps, _values);
-        TotalSignUps++;
+        emit NewRegistration(_poolId, pool.UserSignUps, _values);
+        pool.UserSignUps++;
     }
 
-    function EditValues(uint256 _signUpId, string[] memory _values)
+    function EditValues(
+        uint256 _poolId,
+        uint256 _signUpId,
+        string[] memory _values
+    )
         external
         whenNotPaused
-        isCorrectSignUpId(_signUpId)
+        isCorrectPoolId(_poolId)
+        isCorrectSignUpId(_poolId, _signUpId)
         mustHaveElements(_values)
-        onlySignUpOwner(_signUpId)
+        onlySignUpOwner(_poolId, _signUpId)
+        sameLenghtArrays(
+            RegistrationPools[_poolId].SignUpPools[_signUpId].Values,
+            _values
+        )
     {
-        require(
-            SignUpPools[_signUpId].Values.length == _values.length,
-            "New values array must be the same length as previous."
-        );
-
-        string[] memory oldValues = SignUpPools[_signUpId].Values;
-        SignUpPools[_signUpId].Values = _values;
+        string[] memory oldValues = RegistrationPools[_poolId]
+            .SignUpPools[_signUpId]
+            .Values;
+        RegistrationPools[_poolId].SignUpPools[_signUpId].Values = _values;
 
         emit SignUpValuesChanged(_values, oldValues);
     }
 
-    function GetAllMySignUpIds() external view returns (uint256[] memory) {
+    function GetAllMySignUpIds(uint256 _poolId)
+        external
+        view
+        isCorrectPoolId(_poolId)
+        returns (uint256[] memory)
+    {
         uint256 counter = 0;
-        for (uint256 i = 0; i < TotalSignUps; i++) {
-            if (SignUpPools[i].Owner == msg.sender) {
+        for (uint256 i = 0; i < RegistrationPools[_poolId].UserSignUps; i++) {
+            if (RegistrationPools[_poolId].SignUpPools[i].Owner == msg.sender) {
                 counter++;
             }
         }
 
         uint256[] memory signUpIds = new uint256[](counter);
         uint256 j = 0;
-        for (uint256 i = 0; i < TotalSignUps; i++) {
-            if (SignUpPools[i].Owner == msg.sender) {
+        for (uint256 i = 0; i < RegistrationPools[_poolId].UserSignUps; i++) {
+            if (RegistrationPools[_poolId].SignUpPools[i].Owner == msg.sender) {
                 signUpIds[j++] = i;
             }
         }

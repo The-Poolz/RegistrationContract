@@ -6,3 +6,5 @@ coverage
 coverage.json
 # production
 build
+.coverage_contracts
+.coverage_artifacts
