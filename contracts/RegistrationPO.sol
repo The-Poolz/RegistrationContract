@@ -76,4 +76,23 @@ contract RegistrationPO is RegistrationManageable {
         RegistrationPools[_poolId].IsActive = false;
         emit RegistrationPoolDeactivated(_poolId);
     }
+
+    function GetMyPoolIds() external view returns (uint256[] memory) {
+        uint256 counter = 0;
+        for (uint256 i = 0; i < TotalPools; i++) {
+            if (RegistrationPools[i].Owner == msg.sender) {
+                counter++;
+            }
+        }
+
+        uint256[] memory poolsIds = new uint256[](counter);
+        uint256 j = 0;
+        for (uint256 i = 0; i < TotalPools; i++) {
+            if (RegistrationPools[i].Owner == msg.sender) {
+                poolsIds[j++] = i;
+            }
+        }
+
+        return poolsIds;
+    }
 }
