@@ -67,7 +67,7 @@ contract RegistrationUser is RegistrationPO {
         return
             _findMatchingValues(
                 RegistrationPools[_poolId].UserSignUps,
-                _getOwners(RegistrationPools[_poolId].UserSignUps)
+                _getOwners(RegistrationPools[_poolId].UserSignUps, _poolId)
             );
     }
 }

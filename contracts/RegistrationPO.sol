@@ -78,39 +78,6 @@ contract RegistrationPO is RegistrationManageable {
     }
 
     function GetMyPoolIds() external view returns (uint256[] memory) {
-        return _findMatchingValues(TotalPools, _getOwners(TotalPools));
-    }
-    
-
-    function _getOwners(uint256 _amount) internal view returns (address[] memory) {
-        address[] memory owners = new address[](_amount);
-        for (uint256 i = 0; i < _amount; i++) {
-            owners[i] = RegistrationPools[i].Owner;
-        }
-
-        return owners;
-    }
-
-    function _findMatchingValues(uint256 _amount, address[] memory _owners)
-        internal
-        view
-        returns (uint256[] memory)
-    {
-        uint256 counter = 0;
-        for (uint256 i = 0; i < _amount; i++) {
-            if (_owners[i] == msg.sender) {
-                counter++;
-            }
-        }
-
-        uint256[] memory res = new uint256[](counter);
-        uint256 j = 0;
-        for (uint256 i = 0; i < _amount; i++) {
-            if (_owners[i] == msg.sender) {
-                res[j++] = i;
-            }
-        }
-
-        return res;
+        return _findMatchingValues(TotalPools, _getOwners(TotalPools, -1));
     }
 }
