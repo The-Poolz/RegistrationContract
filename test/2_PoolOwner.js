@@ -117,7 +117,7 @@ contract("Admin settings", accounts => {
         it('should get my pool ids', async () => {
             const ids = await instance.GetMyPoolIds({ from: ownerAddress });
             assert.equal(ids.length, 1);
-            assert.equal(ids.toNumber(), 0);
+            assert.equal(ids.toString(), 0);
         });
     });
 });
