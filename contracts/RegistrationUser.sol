@@ -57,21 +57,10 @@ contract RegistrationUser is RegistrationPO {
         isCorrectPoolId(_poolId)
         returns (uint256[] memory)
     {
-        uint256 counter = 0;
-        for (uint256 i = 0; i < RegistrationPools[_poolId].UserSignUps; i++) {
-            if (RegistrationPools[_poolId].SignUpPools[i].Owner == msg.sender) {
-                counter++;
-            }
-        }
-
-        uint256[] memory signUpIds = new uint256[](counter);
-        uint256 j = 0;
-        for (uint256 i = 0; i < RegistrationPools[_poolId].UserSignUps; i++) {
-            if (RegistrationPools[_poolId].SignUpPools[i].Owner == msg.sender) {
-                signUpIds[j++] = i;
-            }
-        }
-
-        return signUpIds;
+        return
+            _findMatchingValues(
+                RegistrationPools[_poolId].UserSignUps,
+                RegistrationPools
+            );
     }
 }
