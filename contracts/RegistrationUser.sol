@@ -18,8 +18,6 @@ contract RegistrationUser is RegistrationPO {
 
         pool.SignUpPools[pool.UserSignUps] = SignUpPool(
             msg.sender,
-            _poolId,
-            pool.UserSignUps,
             _values
         );
 
