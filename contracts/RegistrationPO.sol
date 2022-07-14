@@ -10,7 +10,7 @@ contract RegistrationPO is RegistrationManageable {
         address _token,
         uint256 _fee,
         string[] memory _keys
-    ) external payable whenNotPaused mustHaveElements(_keys) {
+    ) external payable whenNotPaused {
         PayFee(Fee);
 
         RegistrationPool storage newPool = RegistrationPools[TotalPools];
