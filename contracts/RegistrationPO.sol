@@ -21,15 +21,15 @@ contract RegistrationPO is RegistrationManageable {
         newPool.UserSignUps = 0;
         newPool.TotalKeys = _keys.length;
 
-        SetRegisterFee(TotalPools++, _token, _fee);
-
         emit NewRegistrationPoolCreated(
-            TotalPools - 1,
+            TotalPools,
             _keys,
             newPool.Owner,
             newPool.FeeProvider.FeeToken(),
             newPool.FeeProvider.Fee()
         );
+
+        SetRegisterFee(TotalPools++, _token, _fee);
     }
 
     function SetRegisterFee(
