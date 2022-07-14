@@ -22,7 +22,7 @@ contract("Admin settings", accounts => {
 
     describe('Creating registration pool', async () => {
         it('should create a new registration pool', async () => {
-            const tx = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
+            const tx = await instance.Register(constants.ZERO_ADDRESS, fee, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: ownerAddress });
             poolId = tx.logs[1].args.PoolId.toString();
             const result = await instance.RegistrationPools(poolId);
             assert.equal(tx.logs[1].event, 'NewRegistrationPoolCreated');
@@ -84,7 +84,7 @@ contract("Admin settings", accounts => {
         const poolOwner = accounts[3];
         it('should withdraw pool fee to pool owner when it is main coin', async () => {
             const fee = new BigNumber(web3.utils.toWei('0.05', 'ether').toString());
-            const tx = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: poolOwner });
+            const tx = await instance.Register(constants.ZERO_ADDRESS, fee, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: poolOwner });
             poolId = tx.logs[1].args.PoolId.toString();
             await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: investor, value: fee });
             const oldBal = new BigNumber((await web3.eth.getBalance(poolOwner)));
@@ -99,7 +99,7 @@ contract("Admin settings", accounts => {
 
         it('should withdraw pool fee to pool owner when it is ERC20', async () => {
             const fee = '100000';
-            const tx = await instance.Register(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: poolOwner });
+            const tx = await instance.Register(Token.address, fee, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: poolOwner });
             poolId = tx.logs[1].args.PoolId.toString();
             const result = await instance.RegistrationPools(poolId);
             const oldBal = await Token.balanceOf(poolOwner);

@@ -19,9 +19,9 @@ contract("User actions", accounts => {
     before(async () => {
         instance = await RegistrationUser.new();
         Token = await TestToken.new('TestToken', 'TEST');
-        const tx = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], price, { from: ownerAddress });
+        const tx = await instance.Register(constants.ZERO_ADDRESS, price, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: ownerAddress });
         poolId = tx.logs[1].args.PoolId.toString();
-        const tx2 = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], feePrice, { from: ownerAddress });
+        const tx2 = await instance.Register(constants.ZERO_ADDRESS, feePrice, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: ownerAddress });
         poolId2 = tx2.logs[1].args.PoolId.toString();
     });
 
@@ -58,7 +58,7 @@ contract("User actions", accounts => {
         let poolId3;
 
         before(async () => {
-            const tx = await instance.Register(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
+            const tx = await instance.Register(Token.address, fee, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: ownerAddress });
             poolId3 = tx.logs[1].args.PoolId.toString();
             await Token.transfer(accounts[3], fee, { from: ownerAddress });
             await Token.approve(instance.address, fee, { from: accounts[3] });
@@ -80,7 +80,7 @@ contract("User actions", accounts => {
         it('should SignUp when fee is 0', async () => {
             await Token.transfer(accounts[6], fee, { from: ownerAddress });
             await Token.approve(instance.address, fee, { from: accounts[6] });
-            const tx = await instance.Register(Token.address, ["Key1", "Key2", "Key3", "Key4", "Key5"], 0, { from: ownerAddress });
+            const tx = await instance.Register(Token.address, 0, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: ownerAddress });
             const poolId = tx.logs[1].args.PoolId.toString();
             const tx2 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[6] });
             truffleAssert.eventEmitted(tx2, 'NewRegistration');
@@ -94,7 +94,7 @@ contract("User actions", accounts => {
         let poolId;
 
         before(async () => {
-            const tx = await instance.Register(constants.ZERO_ADDRESS, ["Key1", "Key2", "Key3", "Key4", "Key5"], fee, { from: ownerAddress });
+            const tx = await instance.Register(constants.ZERO_ADDRESS, fee, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: ownerAddress });
             poolId = tx.logs[1].args.PoolId.toString();
         });
 

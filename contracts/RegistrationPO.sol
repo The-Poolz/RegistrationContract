@@ -8,8 +8,8 @@ import "./RegistrationManageable.sol";
 contract RegistrationPO is RegistrationManageable {
     function Register(
         address _token,
-        string[] memory _keys,
-        uint256 _fee
+        uint256 _fee,
+        string[] memory _keys
     ) external payable whenNotPaused mustHaveElements(_keys) {
         PayFee(Fee);
 
