@@ -23,8 +23,7 @@ contract RegistrationUser is RegistrationPO {
             _values
         );
 
-        emit NewRegistration(_poolId, pool.UserSignUps, _values);
-        pool.UserSignUps++;
+        emit NewRegistration(_poolId, pool.UserSignUps++, _values);
     }
 
     function EditValues(
