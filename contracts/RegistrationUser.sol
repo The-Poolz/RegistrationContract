@@ -48,7 +48,7 @@ contract RegistrationUser is RegistrationPO {
             .Values;
         RegistrationPools[_poolId].SignUpPools[_signUpId].Values = _values;
 
-        emit SignUpValuesChanged(_values, oldValues);
+        emit SignUpValuesChanged(_poolId, _signUpId, _values, oldValues);
     }
 
     function GetAllMySignUpIds(uint256 _poolId)
