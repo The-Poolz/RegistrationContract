@@ -57,13 +57,6 @@ contract RegistrationUser is RegistrationPO {
         isCorrectPoolId(_poolId)
         returns (uint256[] memory)
     {
-        address[] memory owners = new address[](
-            RegistrationPools[_poolId].UserSignUps
-        );
-        for (uint256 i = 0; i < RegistrationPools[_poolId].UserSignUps; i++) {
-            owners[i] = RegistrationPools[_poolId].SignUpPools[i].Owner;
-        }
-
         return
             _findMatchingValues(
                 RegistrationPools[_poolId].UserSignUps,
