@@ -20,6 +20,7 @@ contract RegistrationPO is RegistrationManageable {
         newPool.FeeProvider = new FeeBaseHelper();
         newPool.UserSignUps = 0;
         newPool.TotalKeys = _keys.length;
+        MyPools[msg.sender].push(TotalPools);
 
         SetRegisterFee(TotalPools++, _token, _fee);
 
@@ -78,6 +79,6 @@ contract RegistrationPO is RegistrationManageable {
     }
 
     function GetMyPoolIds() external view returns (uint256[] memory) {
-        return _findMatchingValues(TotalPools, _getOwners(TotalPools, -1));
+        return MyPools[msg.sender];
     }
 }
