@@ -111,5 +111,10 @@ contract("User actions", accounts => {
             assert.equal(result.length, 1);
             assert.equal(result.toString(), [0].toString());
         });
+
+        it('should get all RegistrationPool ids of owner', async () => {
+            const result = await instance.GetMyPoolIds({ from: ownerAddress });
+            assert.equal(5, result.length);
+        });
     });
 });

@@ -20,6 +20,7 @@ contract RegistrationPO is RegistrationManageable {
         newPool.FeeProvider = new FeeBaseHelper();
         newPool.UserSignUps = 0;
         newPool.TotalKeys = _keys.length;
+        MyPools[msg.sender].push(TotalPools);
 
         emit NewRegistrationPoolCreated(
             TotalPools,
@@ -75,5 +76,9 @@ contract RegistrationPO is RegistrationManageable {
     {
         RegistrationPools[_poolId].IsActive = false;
         emit RegistrationPoolDeactivated(_poolId);
+    }
+
+    function GetMyPoolIds() external view returns (uint256[] memory) {
+        return MyPools[msg.sender];
     }
 }
