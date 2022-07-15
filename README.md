@@ -10,7 +10,7 @@ The main idea of the Registration contract is to automatizate SignUpPool registr
 
 - [Installation](#installation)
 - [Admin](#admin-settings)
-- [Owner of locked tokens](#pool-owner-settings)
+- [Pool owner](#pool-owner-settings)
 - [User](#user-settings)
 - [License](#license)
 
@@ -36,6 +36,8 @@ truffle dashboard
 truffle migrate --network dashboard
 ```
 
+## Admin settings
+
 ### Setting a new fee amount for registering pool (only for admin)
 
 You should use the SetFeeAmount() function to set a new creation registration pool fee.
@@ -58,6 +60,7 @@ function SetFeeToken(address _token) public;
 
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x432e2d652d55e27b6612e368f287fa9c30b5d24632a07ab52f22bf143f0cd746)
 
+## Pool owner settings
 ### Registering a new pool
 
 First of all, you should define the info keys, which users will have to fill with values.
@@ -112,6 +115,7 @@ You should use the ActivatePool() function to activate a registration pool.
 
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x06d54e0a57726838da8c34fdda0fbdb13d482c97b37a807ec4bbad9a8fccd09c)
 
+## User settings
 ### Signing up
 
 Firstly, you need to specify a pool id and values, that will be filled in to the keys.
