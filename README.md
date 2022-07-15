@@ -37,6 +37,8 @@ You should use the SetFeeAmount() function to set a new creation registration po
     function SetFeeAmount(uint256 _amount) public;
 ```
 
+Testnet tx: [link](https://testnet.bscscan.com/tx/0xc23988f49603d509593b018ecc3e89a9f33bebdb9454a715905ad4408a058839)
+
 ## How to set a new fee token for a new registration pool creation? (only for admin)
 
 You should use the SetFeeToken() function to set a new registration pool fee price.
@@ -46,6 +48,8 @@ You should use the SetFeeToken() function to set a new registration pool fee pri
 function SetFeeToken(address _token) public;
 ```
 
+Testnet tx: [link](https://testnet.bscscan.com/tx/0x432e2d652d55e27b6612e368f287fa9c30b5d24632a07ab52f22bf143f0cd746)
+
 ## How to create a registration pool?
 
 First of all, you should define the info keys, which users will have to fill with values.
@@ -54,13 +58,15 @@ Likewise, you can set a fee for registration a new SignUp by user.
 You should use the Register() function to create a new registration pool.
 
 ```solidity
-    // to create a new SignUp
-    function SignUp(
+    // to create a new registration pool
+    function Register(
         address _token,
         string[] memory _keys,
         uint256 _fee
-    ) external;
+    ) external payable
 ```
+
+Testnet tx: [link](https://testnet.bscscan.com/tx/0x1423eed0585bd997529a4d7dc18f4274d2402c5e605155b7d4e7a1d72315a257)
 
 ## How to set a new fee for SignUp? (only for pool owner)
 
@@ -76,6 +82,8 @@ If you want to set a register fee token you need to specify a token address othe
     ) public;
 ```
 
+Testnet tx: [link]()
+
 ## How can I deactivate registration pool? (only for pool owner)
 
 You should use the DeactivatePool() function to deactivate a registration pool.
@@ -85,6 +93,8 @@ You should use the DeactivatePool() function to deactivate a registration pool.
     function DeactivatePool(uint256 _poolId) external;
 ```
 
+Testnet tx: [link](https://testnet.bscscan.com/tx/0xd06134ea0721086b57f2a6860f1720f39fe5f08c200ddbb4cae56fc56bd99c26)
+
 ## How can I activate registration pool? (only for pool owner)
 
 You should use the ActivatePool() function to activate a registration pool.
@@ -93,6 +103,8 @@ You should use the ActivatePool() function to activate a registration pool.
     // to deactivate registration pool
     function ActivatePool(uint256 _poolId) external;
 ```
+
+Testnet tx: [link](https://testnet.bscscan.com/tx/0x06d54e0a57726838da8c34fdda0fbdb13d482c97b37a807ec4bbad9a8fccd09c)
 
 ## How can I register a new SignUp?
 
@@ -104,6 +116,8 @@ After that you should use the SignUp() function to register a new SignUp.
     // to register a new SignUp
     function SignUp(uint256 _poolId, string[] memory _values) external payable
 ```
+
+Testnet tx: [link](https://testnet.bscscan.com/tx/0x54f47786639c2747ec3340f94a40f044259370cb8f6a8b10509ac1f57b989c0d)
 
 ### Flowchart
 
