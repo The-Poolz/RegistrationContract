@@ -36,6 +36,10 @@ truffle dashboard
 truffle migrate --network dashboard
 ```
 
+### Flowchart
+
+![176641193-3f94fe05-9158-44d6-9e45-d41ccb2b58d2](https://user-images.githubusercontent.com/45734486/177203947-cf29161c-b766-43b8-a252-3bb2bffed136.jpg)
+
 ## Admin settings
 
 ### Setting a new fee amount for registering pool
@@ -170,7 +174,3 @@ Find all of your SignUp IDs.
 
 ## License
 The-Poolz Contracts is released under the MIT License.
-
-### Flowchart
-
-![176641193-3f94fe05-9158-44d6-9e45-d41ccb2b58d2](https://user-images.githubusercontent.com/45734486/177203947-cf29161c-b766-43b8-a252-3bb2bffed136.jpg)
