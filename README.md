@@ -102,7 +102,7 @@ If you want to set a register fee token you need to specify a token address othe
     ) public;
 ```
 
-### Deactivating a poo
+### Deactivating a pool
 
 <pre><b>ATTENTION!
 You can deactivate a pool only if it is activated.</b></pre>
@@ -134,6 +134,9 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0x06d54e0a57726838da8c34fdda0f
 
 ## User settings
 ### Signing up
+
+<pre><b>ATTENTION!
+Amount of _values must be equal to amount of _keys in a pool.</b></pre>
 
 Firstly, you need to specify a pool id and values, that will be filled in to the keys.
 Actually, you need to pay a fee, that pool owner defined for a new SignUp.
