@@ -51,7 +51,7 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0xc23988f49603d509593b018ecc3e
 
 ### Setting a new fee token for registering pool
 
-If you want to set a fee for registering a new pool as a token, you should use SetFeeToken() function.
+If you want to set a fee for registering a new pool as a token, you should use a SetFeeToken() function.
 
 ```solidity
     // to set a new fee price
@@ -101,7 +101,8 @@ If you want to set a register fee token you need to specify a token address othe
 <pre><b>ATTENTION!
 You can deactivate a pool only if it is activated.</b></pre>
 
-You should use the DeactivatePool() function to deactivate a registration pool.
+If you deactivate a pool, users won't be able to sign up.
+To do this, you should use a DeactivatePool() function.
 
 ```solidity
     // to deactivate registration pool
@@ -115,7 +116,8 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0xd06134ea0721086b57f2a6860f17
 <pre><b>ATTENTION!
 You can activate a pool only if it is deactivated.</b></pre>
 
-You should use the ActivatePool() function to activate a registration pool.
+If you activate a pool, users will be able to sign up again.
+To do this, you should use a ActivatePool() function.
 
 ```solidity
     // to deactivate registration pool
