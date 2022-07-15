@@ -89,7 +89,7 @@ module.exports = {
       settings: {
         evmVersion: "istanbul",
         optimizer: {
-          enabled: true, runs: 9999999, viaIR: true,
+          enabled: true, runs: 9999999,
           details: {
             yul: true,
           }
