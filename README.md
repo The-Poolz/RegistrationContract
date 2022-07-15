@@ -69,7 +69,7 @@ Likewise, you can set a fee for registering a new SignUp by user.
 You should use the Register() function to create a new registration pool.
 
 <pre><b>ATTENTION!
-Token can be null if you want to set a commission for signing up with main coin</b></pre>
+Token can be null if you want to set a commission for signing up with main coin.</b></pre>
 
 ```solidity
     // to create a new registration pool
@@ -98,6 +98,9 @@ If you want to set a register fee token you need to specify a token address othe
 
 ### Deactivating a poo
 
+<pre><b>ATTENTION!
+You can deactivate a pool only if it is activated.</b></pre>
+
 You should use the DeactivatePool() function to deactivate a registration pool.
 
 ```solidity
@@ -108,6 +111,9 @@ You should use the DeactivatePool() function to deactivate a registration pool.
 Testnet tx: [link](https://testnet.bscscan.com/tx/0xd06134ea0721086b57f2a6860f1720f39fe5f08c200ddbb4cae56fc56bd99c26)
 
 ### Activating a pool
+
+<pre><b>ATTENTION!
+You can activate a pool only if it is deactivated.</b></pre>
 
 You should use the ActivatePool() function to activate a registration pool.
 
