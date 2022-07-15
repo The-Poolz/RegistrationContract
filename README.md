@@ -47,7 +47,7 @@ truffle migrate --network dashboard
 <pre><b>ATTENTION!
 You can set a new fee amount only if it is not equal to previous.</b></pre>
 
-If you want to set a new fee amount for registering a new poo, you should use a SetFeeAmout() function.
+If you want to set a new fee amount for registering a new pool, you should use a SetFeeAmout() function.
 
 ```solidity
     // to set a new fee price
