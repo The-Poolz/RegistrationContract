@@ -62,22 +62,18 @@ You should use the Register() function to create a new registration pool.
     ) external;
 ```
 
-## How to set a new fee token for SignUp? (only for pool owner)
+## How to set a new fee for SignUp? (only for pool owner)
 
-You should use the SetRegisterToken() function to set a new SignUp fee token.
-
-```solidity
-    // to set a new SignUp fee token
-    function SetRegisterToken(uint256 _poolId, address _token) external;
-```
-
-## How to set a new fee for a SignUp? (only for pool owner)
-
-You should use the SetRegisterPrice() function to set a new SignUp fee.
+You should use the SetRegisterFee() function to set a new SignUp fee.
+If you want to set a register token fee you need to specify a token address otherwise set it a zero address.
 
 ```solidity
     // to set a new SignUp fee
-    function SetRegisterPrice(uint256 _poolId, uint256 _price) external;
+    function SetRegisterFee(
+        uint256 _poolId,
+        address _token,
+        uint256 _price
+    ) public;
 ```
 
 ## How can I deactivate registration pool? (only for pool owner)
