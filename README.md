@@ -51,7 +51,7 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0xc23988f49603d509593b018ecc3e
 
 ### Setting a new fee token for registering pool
 
-You should use the SetFeeToken() function to set a new registration pool fee price.
+If you want to set a fee for registering a new pool as a token, you should use SetFeeToken() function.
 
 ```solidity
     // to set a new fee price
@@ -65,8 +65,11 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0x432e2d652d55e27b6612e368f287
 
 First of all, you should define the info keys, which users will have to fill with values.
 In addition, you have to pay a fee, which admin set for creation a new registration pool.
-Likewise, you can set a fee for registration a new SignUp by user.
+Likewise, you can set a fee for registering a new SignUp by user.
 You should use the Register() function to create a new registration pool.
+
+<pre><b>ATTENTION!
+Token can be null if you want to set a commission for signing up with main coin</b></pre>
 
 ```solidity
     // to create a new registration pool
