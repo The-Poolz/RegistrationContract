@@ -40,7 +40,10 @@ truffle migrate --network dashboard
 
 ### Setting a new fee amount for registering pool
 
-You should use the SetFeeAmount() function to set a new creation registration pool fee.
+<pre><b>ATTENTION!
+You can set a new fee amount only if it is not equal to previous.</b></pre>
+
+If you want to set a new fee amount for registering a new poo, you should use a SetFeeAmout() function.
 
 ```solidity
     // to set a new fee price
@@ -51,7 +54,10 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0xc23988f49603d509593b018ecc3e
 
 ### Setting a new fee token for registering pool
 
-If you want to set a fee for registering a new pool as a token, you should use a SetFeeToken() function.
+<pre><b>ATTENTION!
+You can set a new fee token only if it is not equal to previous.</b></pre>
+
+If you want to set a new fee for registering a new pool as a token, you should use a SetFeeToken() function.
 
 ```solidity
     // to set a new fee price
