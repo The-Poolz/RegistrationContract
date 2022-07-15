@@ -46,11 +46,13 @@ contract RegistrationUser is RegistrationPO {
             _values
         )
     {
+        RegistrationPool storage pool = RegistrationPools[_poolId];
+
         emit SignUpValuesChanged(
             _poolId,
             _signUpId,
             _values,
-            RegistrationPools[_poolId].SignUpPools[_signUpId].Values
+            pool.SignUpPools[_signUpId].Values
         );
         _settingValues(_poolId, _signUpId, _values);
     }
