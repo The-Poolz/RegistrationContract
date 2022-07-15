@@ -46,15 +46,13 @@ contract RegistrationUser is RegistrationPO {
             _values
         )
     {
-        string[] memory oldValues = RegistrationPools[_poolId].SignUpPools[_signUpId].Values;
+        string[] memory oldValues = RegistrationPools[_poolId]
+            .SignUpPools[_signUpId]
+            .Values;
 
-        emit SignUpValuesChanged(
-            _poolId,
-            _signUpId,
-            _values,
-            oldValues
-        );
         _settingValues(_poolId, _signUpId, _values);
+
+        emit SignUpValuesChanged(_poolId, _signUpId, _values, oldValues);
     }
 
     function _settingValues(
