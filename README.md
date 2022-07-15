@@ -82,8 +82,6 @@ If you want to set a register fee token you need to specify a token address othe
     ) public;
 ```
 
-Testnet tx: [link]()
-
 ## How can I deactivate registration pool? (only for pool owner)
 
 You should use the DeactivatePool() function to deactivate a registration pool.
