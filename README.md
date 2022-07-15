@@ -6,19 +6,27 @@
 
 The main idea of the Registration contract is to automatizate SignUpPool registration process.
 
-### Installation
+### Navigation
+
+- [Installation](#installation)
+- [Admin](#admin-settings)
+- [Owner of locked tokens](#pool-owner-settings)
+- [User](#user-settings)
+- [License](#license)
+
+#### Installation
 
 ```console
 npm install
 ```
 
-### Testing
+#### Testing
 
 ```console
 truffle run coverage
 ```
 
-### Deploy
+#### Deploy
 
 ```console
 truffle dashboard
@@ -28,7 +36,7 @@ truffle dashboard
 truffle migrate --network dashboard
 ```
 
-## Setting a new fee amount for registering pool (only for admin)
+### Setting a new fee amount for registering pool (only for admin)
 
 You should use the SetFeeAmount() function to set a new creation registration pool fee.
 
@@ -39,7 +47,7 @@ You should use the SetFeeAmount() function to set a new creation registration po
 
 Testnet tx: [link](https://testnet.bscscan.com/tx/0xc23988f49603d509593b018ecc3e89a9f33bebdb9454a715905ad4408a058839)
 
-## Setting a new fee token for registering pool (only for admin)
+### Setting a new fee token for registering pool (only for admin)
 
 You should use the SetFeeToken() function to set a new registration pool fee price.
 
@@ -50,7 +58,7 @@ function SetFeeToken(address _token) public;
 
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x432e2d652d55e27b6612e368f287fa9c30b5d24632a07ab52f22bf143f0cd746)
 
-## Registering a new pool
+### Registering a new pool
 
 First of all, you should define the info keys, which users will have to fill with values.
 In addition, you have to pay a fee, which admin set for creation a new registration pool.
@@ -68,7 +76,7 @@ You should use the Register() function to create a new registration pool.
 
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x1423eed0585bd997529a4d7dc18f4274d2402c5e605155b7d4e7a1d72315a257)
 
-## Setting a register fee (only for pool owner)
+### Setting a register fee (only for pool owner)
 
 You should use the SetRegisterFee() function to set a new SignUp fee.
 If you want to set a register fee token you need to specify a token address otherwise set it a zero address.
@@ -82,7 +90,7 @@ If you want to set a register fee token you need to specify a token address othe
     ) public;
 ```
 
-## Deactivating a pool (only for pool owner)
+### Deactivating a pool (only for pool owner)
 
 You should use the DeactivatePool() function to deactivate a registration pool.
 
@@ -93,7 +101,7 @@ You should use the DeactivatePool() function to deactivate a registration pool.
 
 Testnet tx: [link](https://testnet.bscscan.com/tx/0xd06134ea0721086b57f2a6860f1720f39fe5f08c200ddbb4cae56fc56bd99c26)
 
-## Activating a pool (only for pool owner)
+### Activating a pool (only for pool owner)
 
 You should use the ActivatePool() function to activate a registration pool.
 
@@ -104,7 +112,7 @@ You should use the ActivatePool() function to activate a registration pool.
 
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x06d54e0a57726838da8c34fdda0fbdb13d482c97b37a807ec4bbad9a8fccd09c)
 
-## Signing up
+### Signing up
 
 Firstly, you need to specify a pool id and values, that will be filled in to the keys.
 Actually, you need to pay a fee, that pool owner defined for a new SignUp.
@@ -117,7 +125,7 @@ After that you should use the SignUp() function to register a new SignUp.
 
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x54f47786639c2747ec3340f94a40f044259370cb8f6a8b10509ac1f57b989c0d)
 
-## Getting my pools' ids
+### Getting my pools' ids
 Find all of your pool IDs.
 
 ```solidity
@@ -125,7 +133,7 @@ Find all of your pool IDs.
     function GetMyPoolIds() external view returns (uint256[] memory);
 ```
 
-## Getting my SignUps' ids
+### Getting my SignUps' ids
 Find all of your SignUp IDs.
 
 ```solidity
@@ -135,6 +143,9 @@ Find all of your SignUp IDs.
         view
         returns (uint256[] memory);
 ```
+
+## License
+The-Poolz Contracts is released under the MIT License.
 
 ### Flowchart
 
