@@ -13,15 +13,21 @@ contract RegistrationUser is RegistrationPO {
         validateStatus(_poolId, true)
         sameLenghtArrays(RegistrationPools[_poolId].Keys, _values)
     {
-        RegistrationPool storage pool = RegistrationPools[_poolId];
-        pool.FeeProvider.PayFee{value: msg.value}(pool.FeeProvider.Fee());
+        RegistrationPools[_poolId].FeeProvider.PayFee{value: msg.value}(
+            RegistrationPools[_poolId].FeeProvider.Fee()
+        );
 
-        pool.SignUpPools[pool.UserSignUps] = SignUpPool(
-            msg.sender,
+        _settingValues(
+            _poolId,
+            RegistrationPools[_poolId].UserSignUps,
             _values
         );
 
-        emit NewRegistration(_poolId, pool.UserSignUps++, _values);
+        emit NewRegistration(
+            _poolId,
+            RegistrationPools[_poolId].UserSignUps++,
+            _values
+        );
     }
 
     function EditValues(
@@ -43,9 +49,21 @@ contract RegistrationUser is RegistrationPO {
         string[] memory oldValues = RegistrationPools[_poolId]
             .SignUpPools[_signUpId]
             .Values;
-        RegistrationPools[_poolId].SignUpPools[_signUpId].Values = _values;
+
+        _settingValues(_poolId, _signUpId, _values);
 
         emit SignUpValuesChanged(_poolId, _signUpId, _values, oldValues);
+    }
+
+    function _settingValues(
+        uint256 _poolId,
+        uint256 _signUpId,
+        string[] memory _values
+    ) internal {
+        RegistrationPools[_poolId].SignUpPools[_signUpId] = SignUpPool(
+            msg.sender,
+            _values
+        );
     }
 
     function GetAllMySignUpIds(uint256 _poolId)
