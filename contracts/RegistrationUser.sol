@@ -6,7 +6,7 @@ import "./RegistrationPO.sol";
 /// @title Contains the functions, that can call a user
 /// @author The-Poolz contracts team
 /// @notice You can use this contract as a user to do sign ups and other related to that actions
-/// @dev This is not a final version of contract and it can be improved further
+/// @dev This is not a final version of the contract and it can be improved further
 contract RegistrationUser is RegistrationPO {
     /// @notice It allows a user to sign up in the concrete pool with the values
     /// @param _poolId An id of a pool

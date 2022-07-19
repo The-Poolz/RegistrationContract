@@ -7,7 +7,7 @@ import "./RegistrationModifiers.sol";
 /// @title Contains the functions, that everybody can use
 /// @author The-Poolz contracts team
 /// @notice You can use this contract to call any function for a public usage
-/// @dev This is not a final version of contract and it can be improved further
+/// @dev This is not a final version of the contract and it can be improved further
 contract RegistrationPublic is RegistrationModifiers, Pausable {
     /// @notice You can get all of your signUp ids by calling this function
     /// @param _poolId An id of a pool

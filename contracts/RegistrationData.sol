@@ -6,7 +6,7 @@ import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
 /// @title Contains all of the data
 /// @author The-Poolz contracts team
 /// @notice You can use this contract for an access to all of the data
-/// @dev This is not a final version of contract and it can be improved further
+/// @dev This is not a final version of the contract and it can be improved further
 contract RegistrationData {
     mapping(uint256 => RegistrationPool) public RegistrationPools; /// stores all the data of the created pools
     mapping(address => uint256[]) public MyPools; /// can use for getting all of your pool ids

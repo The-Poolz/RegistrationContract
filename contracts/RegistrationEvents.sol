@@ -6,7 +6,7 @@ import "./RegistrationData.sol";
 /// @title Contains all the events.
 /// @author The-Poolz contracts team
 /// @notice You can use this contract to have an understanding of the events
-/// @dev This is not a final version of contract and it can be improved further
+/// @dev This is not a final version of the contract and it can be improved further
 contract RegistrationEvents is RegistrationData {
     event NewRegistrationPoolCreated(
         uint256 PoolId,
