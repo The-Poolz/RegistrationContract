@@ -3,7 +3,10 @@ pragma solidity ^0.8.0;
 
 import "./RegistrationEvents.sol";
 
-/// @title contains all modifiers
+/// @title Contains all the modifiers
+/// @author The-Poolz contracts team
+/// @notice You can use this contract to have an understanding of the modifiers implementation
+/// @dev This is not a final version of the contract and it can be improved further
 contract RegistrationModifiers is RegistrationEvents {
     modifier isCorrectPoolId(uint256 _poolId) {
         require(_poolId < TotalPools, "Incorrect pool id.");

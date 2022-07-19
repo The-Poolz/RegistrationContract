@@ -5,7 +5,15 @@ import "poolz-helper-v2/contracts/FeeBaseHelper.sol";
 
 import "./RegistrationManageable.sol";
 
+/// @title contains all modifiers
+/// @author The-Poolz contracts team
+/// @notice You can use this contract for only the most basic simulation
+/// @dev This is not a final version of the contract and it can be improved further
 contract RegistrationPO is RegistrationManageable {
+    /// @notice It allows a user to create a new registration pool
+    /// @param _token A token fee of a signing up by user
+    /// @param _fee A fee for a signing up in the pool
+    /// @param _keys The string values of keys that must be filled by user
     function Register(
         address _token,
         uint256 _fee,
@@ -33,6 +41,10 @@ contract RegistrationPO is RegistrationManageable {
         SetRegisterFee(TotalPools++, _token, _fee);
     }
 
+    /// @notice It allows a pool owner to set a new register fee
+    /// @param _poolId An id of a pool
+    /// @param _token A token fee of a signing up by user
+    /// @param _price A price of a signing up by user
     function SetRegisterFee(
         uint256 _poolId,
         address _token,
@@ -47,6 +59,8 @@ contract RegistrationPO is RegistrationManageable {
         }
     }
 
+    /// @notice It allows a pool owner to withdraw a pool fee
+    /// @param _poolId An id of a pool
     function WithdrawPoolFee(uint256 _poolId)
         external
         whenNotPaused
@@ -56,6 +70,8 @@ contract RegistrationPO is RegistrationManageable {
         PoolFee.WithdrawFee(payable(RegistrationPools[_poolId].Owner));
     }
 
+    /// @notice It allows a pool owner to activate a pool
+    /// @param _poolId An id of a pool
     function ActivatePool(uint256 _poolId)
         external
         whenNotPaused
@@ -67,6 +83,8 @@ contract RegistrationPO is RegistrationManageable {
         emit RegistrationPoolActivated(_poolId);
     }
 
+    /// @notice It allows a pool owner to deactivate a pool
+    /// @param _poolId An id of a pool
     function DeactivatePool(uint256 _poolId)
         external
         whenNotPaused
@@ -78,6 +96,8 @@ contract RegistrationPO is RegistrationManageable {
         emit RegistrationPoolDeactivated(_poolId);
     }
 
+    /// @notice You can get all of your pool ids by calling this function
+    /// @return ids The ids of your pools
     function GetMyPoolIds() external view returns (uint256[] memory) {
         return MyPools[msg.sender];
     }
