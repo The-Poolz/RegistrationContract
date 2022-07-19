@@ -19,10 +19,10 @@ contract RegistrationData {
         FeeBaseHelper FeeProvider;
         uint256 UserSignUps;
         uint256 TotalKeys;
-        mapping(uint256 => SignUpPool) SignUpPools;
+        mapping(uint256 => SignUpForm) SignUps;
     }
 
-    struct SignUpPool {
+    struct SignUpForm {
         address Owner;
         string[] Values;
     }

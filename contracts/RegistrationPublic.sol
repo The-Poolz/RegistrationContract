@@ -32,7 +32,7 @@ contract RegistrationPublic is RegistrationModifiers, Pausable {
         isCorrectSignUpId(_poolId, _signUpId)
         returns (string[] memory)
     {
-        return RegistrationPools[_poolId].SignUpPools[_signUpId].Values;
+        return RegistrationPools[_poolId].SignUps[_signUpId].Values;
     }
 
     /// @notice You can get a signing up fee of the pool

@@ -7,7 +7,7 @@ import "./RegistrationManageable.sol";
 
 /// @title contains all modifiers
 /// @author The-Poolz contracts team
-/// @notice You can use this contract for only the most basic simulation
+/// @notice This contract provides actions for pool owners
 /// @dev This is not a final version of the contract and it can be improved further
 contract RegistrationPO is RegistrationManageable {
     /// @notice It allows a user to create a new registration pool
