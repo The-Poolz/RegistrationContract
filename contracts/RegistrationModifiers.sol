@@ -31,8 +31,7 @@ contract RegistrationModifiers is RegistrationEvents {
 
     modifier onlySignUpOwner(uint256 _poolId, uint256 _signUpId) {
         require(
-            RegistrationPools[_poolId].SignUpPools[_signUpId].Owner ==
-                msg.sender,
+            RegistrationPools[_poolId].SignUps[_signUpId].Owner == msg.sender,
             "You are not an owner of SignUp."
         );
         _;
