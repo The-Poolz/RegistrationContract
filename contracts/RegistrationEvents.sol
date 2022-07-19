@@ -3,7 +3,10 @@ pragma solidity ^0.8.0;
 
 import "./RegistrationData.sol";
 
-/// @title contains all events.
+/// @title Contains all the events.
+/// @author The-Poolz contracts team
+/// @notice You can use this contract to have an understanding of the events
+/// @dev This is not a final version of contract and it can be improved further
 contract RegistrationEvents is RegistrationData {
     event NewRegistrationPoolCreated(
         uint256 PoolId,
@@ -15,5 +18,10 @@ contract RegistrationEvents is RegistrationData {
     event NewRegistration(uint256 PoolId, uint256 SignUpId, string[] Values);
     event RegistrationPoolActivated(uint256 PoolId);
     event RegistrationPoolDeactivated(uint256 PoolId);
-    event SignUpValuesChanged(uint256 PoolId, uint256 SignUpId, string[] NewValues, string[] OldValues);
+    event SignUpValuesChanged(
+        uint256 PoolId,
+        uint256 SignUpId,
+        string[] NewValues,
+        string[] OldValues
+    );
 }
