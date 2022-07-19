@@ -40,5 +40,11 @@ contract("Admin settings", accounts => {
             const valuesAmount = await instance.GetValues(poolId, companiesAmount - 1);
             assert.equal(5, valuesAmount.length);
         });
+
+        it('should get pool signUp fee', async () => {
+            const res = await instance.GetPoolSignUpFee(poolId);
+            assert.equal(res.feeToken, constants.ZERO_ADDRESS);
+            assert.equal(res.fee, 100);
+        });
     });
 });
