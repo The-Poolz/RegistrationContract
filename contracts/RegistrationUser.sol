@@ -57,13 +57,13 @@ contract RegistrationUser is RegistrationPO {
             _values
         )
     {
-        string[] memory oldValues = RegistrationPools[_poolId]
+        string[] storage oldValues = RegistrationPools[_poolId]
             .SignUps[_signUpId]
             .Values;
 
-        _settingValues(_poolId, _signUpId, _values);
-
         emit SignUpValuesChanged(_poolId, _signUpId, _values, oldValues);
+
+        _settingValues(_poolId, _signUpId, _values);
     }
 
     /// @dev This is an internal function that creates a new SignUpForm and set it to the pool
