@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/The-Poolz/RegistrationContract/branch/master/graph/badge.svg?token=Z3HUc9AJRC)](https://codecov.io/gh/The-Poolz/RegistrationContract)
 [![CodeFactor](https://www.codefactor.io/repository/github/the-poolz/registrationcontract/badge)](https://www.codefactor.io/repository/github/the-poolz/registrationcontract)
 
-The main idea of the Registration contract is to automatizate SignUpPool registration process.
+The main idea of the Registration contract is to automatizate SignUp registration process.
 
 ### Navigation
 
@@ -71,6 +71,7 @@ function SetFeeToken(address _token) public;
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x432e2d652d55e27b6612e368f287fa9c30b5d24632a07ab52f22bf143f0cd746)
 
 ## Pool owner settings
+
 ### Registering a new pool
 
 <pre><b>ATTENTION!
@@ -137,6 +138,7 @@ To do this, you should use a ActivatePool() function.
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x06d54e0a57726838da8c34fdda0fbdb13d482c97b37a807ec4bbad9a8fccd09c)
 
 ## User settings
+
 ### Signing up
 
 <pre><b>ATTENTION!
@@ -154,6 +156,7 @@ After that you should use the SignUp() function to register a new SignUp.
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x54f47786639c2747ec3340f94a40f044259370cb8f6a8b10509ac1f57b989c0d)
 
 ### Getting my pools' ids
+
 Find all of your pool IDs.
 
 ```solidity
@@ -162,6 +165,7 @@ Find all of your pool IDs.
 ```
 
 ### Getting my SignUps' ids
+
 Find all of your SignUp IDs.
 
 ```solidity
@@ -173,4 +177,5 @@ Find all of your SignUp IDs.
 ```
 
 ## License
+
 The-Poolz Contracts is released under the MIT License.
