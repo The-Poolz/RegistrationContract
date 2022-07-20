@@ -3,7 +3,6 @@ const { assert } = require('chai');
 const truffleAssert = require('truffle-assertions');
 const TestToken = artifacts.require("ERC20Token");
 const constants = require('@openzeppelin/test-helpers/src/constants.js');
-const BigNumber = require('bignumber.js');
 
 contract("Admin settings", accounts => {
     let ownerAddress = accounts[0];

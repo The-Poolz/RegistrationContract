@@ -39,8 +39,7 @@ contract("Admin settings", accounts => {
         });
 
         it('should fail to deactivate when already is deactivated', async () => {
-            const tx = instance.DeactivatePool(poolId, { from: ownerAddress });
-            await truffleAssert.reverts(tx, "Pool already has the same status.");
+            await truffleAssert.reverts(instance.DeactivatePool(poolId, { from: ownerAddress }), "Pool already has the same status.");
         });
 
         it('should unpause existing pool', async () => {
@@ -61,13 +60,11 @@ contract("Admin settings", accounts => {
 
     describe('Reverting of incorrect calling', async () => {
         it('should fail to activate when already active', async () => {
-            const tx = instance.ActivatePool(poolId, { from: ownerAddress });
-            await truffleAssert.reverts(tx, "Pool already has the same status.");
+            await truffleAssert.reverts(instance.ActivatePool(poolId, { from: ownerAddress }), "Pool already has the same status.");
         });
 
         it('should fail to activate pool when it does not exist', async () => {
-            const tx = instance.ActivatePool(10, { from: ownerAddress });
-            await truffleAssert.reverts(tx, "Incorrect pool id.");
+            await truffleAssert.reverts(instance.ActivatePool(10, { from: ownerAddress }), "Incorrect pool id.");
         });
 
         it('should fail to deactivate pool when it is invalid pool owner', async () => {
