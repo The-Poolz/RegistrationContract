@@ -96,6 +96,8 @@ contract("User actions", accounts => {
         before(async () => {
             const tx = await instance.Register(constants.ZERO_ADDRESS, fee, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: ownerAddress });
             poolId = tx.logs[1].args.PoolId.toString();
+            const tx2 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4], value: fee });
+            const tx3 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[5], value: fee });
         });
 
         it('should change SignUpPool values', async () => {
@@ -109,7 +111,7 @@ contract("User actions", accounts => {
         it('should get all SignUpPool ids of owner', async () => {
             const result = await instance.GetAllMySignUpIds(poolId, { from: accounts[2] });
             assert.equal(result.length, 1);
-            assert.equal(result.toString(), [0].toString());
+            assert.equal(result.toString(), [2].toString());
         });
 
         it('should get all RegistrationPool ids of owner', async () => {
