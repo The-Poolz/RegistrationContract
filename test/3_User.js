@@ -41,13 +41,11 @@ contract("User actions", accounts => {
         });
 
         it('Fail to SignUp when fee is not provided', async () => {
-            const tx = instance.SignUp(poolId2, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[3] });
-            await truffleAssert.reverts(tx, 'Not Enough Fee Provided');
+            await truffleAssert.reverts(instance.SignUp(poolId2, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[3] }), 'Not Enough Fee Provided');
         });
 
         it('Fail to SignUp when pool does not exist', async () => {
-            const tx = instance.SignUp(10, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[5], value: '10' });
-            await truffleAssert.reverts(tx, 'Incorrect pool id.');
+            await truffleAssert.reverts(instance.SignUp(10, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[5], value: '10' }), 'Incorrect pool id.');
         });
     });
 
@@ -71,8 +69,7 @@ contract("User actions", accounts => {
         });
 
         it('should fail to SignUp when fee is not provided', async () => {
-            const tx = instance.SignUp(poolId2, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4] });
-            await truffleAssert.reverts(tx, 'Not Enough Fee Provided'); // revert msg from poolz-helper
+            await truffleAssert.reverts(instance.SignUp(poolId2, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4] }), 'Not Enough Fee Provided');
         });
 
         it('should SignUp when fee is 0', async () => {
@@ -94,8 +91,8 @@ contract("User actions", accounts => {
         before(async () => {
             const tx = await instance.Register(constants.ZERO_ADDRESS, fee, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: ownerAddress });
             poolId = tx.logs[1].args.PoolId.toString();
-            const tx2 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4], value: fee });
-            const tx3 = await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[5], value: fee });
+            await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4], value: fee });
+            await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[5], value: fee });
         });
 
         it('should change SignUpPool values', async () => {
