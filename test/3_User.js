@@ -120,41 +120,41 @@ contract("User actions", accounts => {
 
     describe('should fail', async () => {
         it('should revert gettting all SignUpPool ids of owner', async () => {
-            truffleAssert.reverts(instance.GetAllMySignUpIds(25, { from: accounts[2] }), 'Incorrect pool id');
+            await truffleAssert.reverts(instance.GetAllMySignUpIds(25, { from: accounts[2] }), 'Incorrect pool id.');
         });
 
         it('should revert signing up because of incorrect pool id', async () => {
-            truffleAssert.reverts(instance.SignUp(25, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2] }), 'Incorrect pool id');
+            await truffleAssert.reverts(instance.SignUp(25, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2] }), 'Incorrect pool id.');
         });
 
         it('should revert signing up because of zero amount of values', async () => {
-            truffleAssert.reverts(instance.SignUp(poolId, [], { from: accounts[2] }), 'Data array must have elements.');
+            await truffleAssert.reverts(instance.SignUp(poolId, [], { from: accounts[2] }), 'Data array must have elements.');
         });
 
         it('should revert signing up because of pool is deactivated', async () => {
             await instance.DeactivatePool(poolId, { from: ownerAddress });
-            truffleAssert.reverts(instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2] }), 'Pool already has the same status.');
+            await truffleAssert.reverts(instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[2] }), 'Pool already has the same status.');
             await instance.ActivatePool(poolId, { from: ownerAddress });
         });
 
         it('should revert signing up because of invalid amount of values', async () => {
-            truffleAssert.reverts(instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4"], { from: accounts[2] }), 'Both arrays must have the same length.');
+            await truffleAssert.reverts(instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4"], { from: accounts[2] }), 'Both arrays must have the same length.');
         });
 
         it('should revert signing up because of incorrect pool id', async () => {
-            truffleAssert.reverts(instance.EditValues(25, 1, ["Value1", "Value2", "Value3", "Value4"], { from: accounts[2] }), 'Incorrect pool id');
+            await truffleAssert.reverts(instance.EditValues(25, 1, ["Value1", "Value2", "Value3", "Value4"], { from: accounts[2] }), 'Incorrect pool id.');
         });
 
         it('should revert signing up because of incorrect SignUp id', async () => {
-            truffleAssert.reverts(instance.EditValues(poolId, 10, ["Value1", "Value2", "Value3", "Value4"], { from: accounts[2] }), 'Incorrect SignUp id.');
+            await truffleAssert.reverts(instance.EditValues(poolId, 10, ["Value1", "Value2", "Value3", "Value4"], { from: accounts[2] }), 'Incorrect SignUp id.');
         });
 
         it('should revert signing up because of a zero values length', async () => {
-            truffleAssert.reverts(instance.EditValues(poolId, 1, [], { from: accounts[2] }), 'Data array must have elements.');
+            await truffleAssert.reverts(instance.EditValues(poolId, 1, [], { from: accounts[2] }), 'Data array must have elements.');
         });
 
         it('should revert signing up because of you are not a pool owner', async () => {
-            truffleAssert.reverts(instance.EditValues(poolId, 1, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[8] }), 'You are not an owner of SignUp.');
+            await truffleAssert.reverts(instance.EditValues(poolId, 1, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[8] }), 'You are not an owner of SignUp.');
         });
     });
 });
