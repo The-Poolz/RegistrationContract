@@ -1,9 +1,7 @@
 const RegistrationUser = artifacts.require("RegistrationUser");
-const FeeBaseHelper = artifacts.require("FeeBaseHelper");
 const { assert } = require('chai');
 const truffleAssert = require('truffle-assertions');
 const TestToken = artifacts.require("ERC20Token");
-const BigNumber = require("bignumber.js");
 const constants = require('@openzeppelin/test-helpers/src/constants.js');
 
 contract("User actions", accounts => {
@@ -49,7 +47,7 @@ contract("User actions", accounts => {
 
         it('Fail to SignUp when pool does not exist', async () => {
             const tx = instance.SignUp(10, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[5], value: '10' });
-            truffleAssert.reverts(tx, 'Incorrect pool id.');
+            await truffleAssert.reverts(tx, 'Incorrect pool id.');
         });
     });
 
