@@ -37,16 +37,16 @@ contract RegistrationPublic is RegistrationModifiers, Pausable {
 
     /// @notice You can get a signing up fee of the pool
     /// @param _poolId An id of the pool
-    /// @return feeToken A fee token for a signing up in the pool
     /// @return fee A fee amount for a signing up in the pool
+    /// @return feeToken A fee token for a signing up in the pool
     function GetPoolSignUpFee(uint256 _poolId)
         external
         view
-        returns (address feeToken, uint256 fee)
+        returns (uint256 fee, address feeToken)
     {
         return (
-            RegistrationPools[_poolId].FeeProvider.FeeToken(),
-            RegistrationPools[_poolId].FeeProvider.Fee()
+            RegistrationPools[_poolId].FeeProvider.Fee(),
+            RegistrationPools[_poolId].FeeProvider.FeeToken()
         );
     }
 }
