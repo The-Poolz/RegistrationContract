@@ -53,12 +53,12 @@ contract RegistrationUser is RegistrationPO {
         mustHaveElements(_values)
         onlySignUpOwner(_poolId, _signUpId)
         sameLenghtArrays(
-            RegistrationPools[_poolId].SignUpPools[_signUpId].Values,
+            RegistrationPools[_poolId].SignUps[_signUpId].Values,
             _values
         )
     {
         string[] memory oldValues = RegistrationPools[_poolId]
-            .SignUpPools[_signUpId]
+            .SignUps[_signUpId]
             .Values;
 
         _settingValues(_poolId, _signUpId, _values);
@@ -66,13 +66,16 @@ contract RegistrationUser is RegistrationPO {
         emit SignUpValuesChanged(_poolId, _signUpId, _values, oldValues);
     }
 
-    ///@dev
+    /// @dev This is an internal function that creates a new SignUpForm and set it to the pool
+    /// @param _poolId An id of a pool
+    /// @param _signUpId An id of a sign up
+    /// @param _values The string values that were filled by user
     function _settingValues(
         uint256 _poolId,
         uint256 _signUpId,
         string[] memory _values
     ) internal {
-        RegistrationPools[_poolId].SignUpPools[_signUpId] = SignUpPool(
+        RegistrationPools[_poolId].SignUps[_signUpId] = SignUpForm(
             msg.sender,
             _values
         );
@@ -89,7 +92,7 @@ contract RegistrationUser is RegistrationPO {
     {
         uint256 counter = 0;
         for (uint256 i = 0; i < RegistrationPools[_poolId].UserSignUps; i++) {
-            if (RegistrationPools[_poolId].SignUpPools[i].Owner == msg.sender) {
+            if (RegistrationPools[_poolId].SignUps[i].Owner == msg.sender) {
                 counter++;
             }
         }
@@ -97,7 +100,7 @@ contract RegistrationUser is RegistrationPO {
         uint256[] memory signUpIds = new uint256[](counter);
         uint256 j = 0;
         for (uint256 i = 0; i < RegistrationPools[_poolId].UserSignUps; i++) {
-            if (RegistrationPools[_poolId].SignUpPools[i].Owner == msg.sender) {
+            if (RegistrationPools[_poolId].SignUps[i].Owner == msg.sender) {
                 signUpIds[j++] = i;
             }
         }
