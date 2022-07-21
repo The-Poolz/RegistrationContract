@@ -27,7 +27,6 @@ contract RegistrationPO is RegistrationManageable {
         newPool.IsActive = true;
         newPool.FeeProvider = new FeeBaseHelper();
         newPool.UserSignUps = 0;
-        newPool.TotalKeys = _keys.length;
         MyPools[msg.sender].push(TotalPools);
 
         emit NewRegistrationPoolCreated(
