@@ -50,7 +50,6 @@ You can set a new fee amount only if it is not equal to previous.</b></pre>
 If you want to set a new fee amount for registering a new pool, you should use a SetFeeAmout() function.
 
 ```solidity
-    // to set a new fee price
     function SetFeeAmount(uint256 _amount) public;
 ```
 
@@ -64,7 +63,6 @@ You can set a new fee token only if it is not equal to previous.</b></pre>
 If you want to set a new fee for registering a new pool as a token, you should use a SetFeeToken() function.
 
 ```solidity
-    // to set a new fee price
 function SetFeeToken(address _token) public;
 ```
 
@@ -83,7 +81,6 @@ Likewise, you can set a fee for registering a new SignUp by user.
 You should use the Register() function to create a new registration pool.
 
 ```solidity
-    // to create a new registration pool
     function Register(
         address _token,
         string[] memory _keys,
@@ -99,7 +96,6 @@ You should use the SetRegisterFee() function to set a new SignUp fee.
 If you want to set a register fee token you need to specify a token address otherwise set it a zero address.
 
 ```solidity
-    // to set a new SignUp fee
     function SetRegisterFee(
         uint256 _poolId,
         address _token,
@@ -116,7 +112,6 @@ If you deactivate a pool, users won't be able to sign up.
 To do this, you should use a DeactivatePool() function.
 
 ```solidity
-    // to deactivate registration pool
     function DeactivatePool(uint256 _poolId) external;
 ```
 
@@ -131,7 +126,6 @@ If you activate a pool, users will be able to sign up again.
 To do this, you should use a ActivatePool() function.
 
 ```solidity
-    // to deactivate registration pool
     function ActivatePool(uint256 _poolId) external;
 ```
 
@@ -149,7 +143,6 @@ Actually, you need to pay a fee, that pool owner defined for a new SignUp.
 After that you should use the SignUp() function to register a new SignUp.
 
 ```solidity
-    // to register a new SignUp
     function SignUp(uint256 _poolId, string[] memory _values) external payable;
 ```
 
@@ -160,7 +153,6 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0x54f47786639c2747ec3340f94a40
 Find all of your pool IDs.
 
 ```solidity
-    // to get all owner's pool ids
     function GetMyPoolIds() external view returns (uint256[] memory);
 ```
 
@@ -169,11 +161,22 @@ Find all of your pool IDs.
 Find all of your SignUp IDs.
 
 ```solidity
-    // to get all user's SignUp ids
     function GetAllMySignUpIds(uint256 _poolId)
         external
         view
         returns (uint256[] memory);
+```
+
+### Getting a pool's sign up fee
+
+Find a pool's signUp fee.
+
+```solidity
+    function GetPoolSignUpFee(uint256 _poolId)
+        external
+        view
+        returns (uint256 fee, address feeToken)
+    {
 ```
 
 ## License
