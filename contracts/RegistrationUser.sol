@@ -98,10 +98,10 @@ contract RegistrationUser is RegistrationPO {
         }
 
         uint256[] memory signUpIds = new uint256[](counter);
-        uint256 j = 0;
+        counter = 0;
         for (uint256 i = 0; i < RegistrationPools[_poolId].UserSignUps; i++) {
             if (RegistrationPools[_poolId].SignUps[i].Owner == msg.sender) {
-                signUpIds[j++] = i;
+                signUpIds[counter++] = i;
             }
         }
 
