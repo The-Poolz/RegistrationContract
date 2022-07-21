@@ -42,6 +42,7 @@ contract RegistrationPublic is RegistrationModifiers, Pausable {
     function GetPoolSignUpFee(uint256 _poolId)
         external
         view
+        isCorrectPoolId(_poolId)
         returns (uint256 fee, address feeToken)
     {
         return (
