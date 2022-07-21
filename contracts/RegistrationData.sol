@@ -18,7 +18,6 @@ contract RegistrationData {
         bool IsActive;
         FeeBaseHelper FeeProvider;
         uint256 UserSignUps;
-        uint256 TotalKeys;
         mapping(uint256 => SignUpForm) SignUps;
     }
 
