@@ -53,7 +53,7 @@ If you want to set a new fee amount for registering a new pool, you should use a
     function SetFeeAmount(uint256 _amount) public;
 ```
 
-Testnet tx: [link](https://testnet.bscscan.com/tx/0xc23988f49603d509593b018ecc3e89a9f33bebdb9454a715905ad4408a058839)
+Testnet tx: [link](https://testnet.bscscan.com/tx/0x7c009b491f702e0f040ac709a7295f30910f6616d11809519e99ae67c832be1c)
 
 ### Setting a new fee token for registering pool
 
@@ -66,7 +66,7 @@ If you want to set a new fee for registering a new pool as a token, you should u
 function SetFeeToken(address _token) public;
 ```
 
-Testnet tx: [link](https://testnet.bscscan.com/tx/0x432e2d652d55e27b6612e368f287fa9c30b5d24632a07ab52f22bf143f0cd746)
+Testnet tx: [link](https://testnet.bscscan.com/tx/0xe8b2c4f85cf374f63cd8945e03c076f9c1a4eed6cd5ed9e0729dc74c2e5c82fd)
 
 ## Pool owner settings
 
@@ -88,7 +88,7 @@ You should use the Register() function to create a new registration pool.
     ) external payable
 ```
 
-Testnet tx: [link](https://testnet.bscscan.com/tx/0x1423eed0585bd997529a4d7dc18f4274d2402c5e605155b7d4e7a1d72315a257)
+Testnet tx: [link](https://testnet.bscscan.com/tx/0xae0cd7e493ec6de39f4b3f041b7f289a246b5cb2d79992baa2ba96d0c141ee5b)
 
 ### Setting a register fee
 
@@ -103,6 +103,8 @@ If you want to set a register fee token you need to specify a token address othe
     ) public;
 ```
 
+Testnet tx: [link](https://testnet.bscscan.com/tx/0x68b5ae29de59c13bfb3aab79a59f71ef0e580d666f3c36279714d8a078f28e36)
+
 ### Deactivating a pool
 
 <pre><b>ATTENTION!
@@ -115,7 +117,7 @@ To do this, you should use a DeactivatePool() function.
     function DeactivatePool(uint256 _poolId) external;
 ```
 
-Testnet tx: [link](https://testnet.bscscan.com/tx/0xd06134ea0721086b57f2a6860f1720f39fe5f08c200ddbb4cae56fc56bd99c26)
+Testnet tx: [link](https://testnet.bscscan.com/tx/0xb9abba66d0a93d455a3be0224bb3c4dbfb6f54d158d260996ba46a53c876279a)
 
 ### Activating a pool
 
@@ -129,7 +131,7 @@ To do this, you should use a ActivatePool() function.
     function ActivatePool(uint256 _poolId) external;
 ```
 
-Testnet tx: [link](https://testnet.bscscan.com/tx/0x06d54e0a57726838da8c34fdda0fbdb13d482c97b37a807ec4bbad9a8fccd09c)
+Testnet tx: [link](https://testnet.bscscan.com/tx/0xc8d817766e11d1ae1a8892b90761d245cbebe68cb7dbeb033648e34837cd5ee1)
 
 ## User settings
 
@@ -146,7 +148,7 @@ After that you should use the SignUp() function to register a new SignUp.
     function SignUp(uint256 _poolId, string[] memory _values) external payable;
 ```
 
-Testnet tx: [link](https://testnet.bscscan.com/tx/0x54f47786639c2747ec3340f94a40f044259370cb8f6a8b10509ac1f57b989c0d)
+Testnet tx: [link](https://testnet.bscscan.com/tx/0xae76da0371a2432aaea7bc476c962ee8ac8f15d0082c35ea15f1bd3f852aa026)
 
 ### Getting my pools' ids
 
