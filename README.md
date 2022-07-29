@@ -83,8 +83,8 @@ You should use the Register() function to create a new registration pool.
 ```solidity
     function Register(
         address _token,
-        string[] memory _keys,
-        uint256 _fee
+        uint256 _fee,
+        string[] memory _keys
     ) external payable
 ```
 
