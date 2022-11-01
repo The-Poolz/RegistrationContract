@@ -20,7 +20,12 @@ contract RegistrationUser is RegistrationPO {
         validateStatus(_poolId, true)
         sameLenghtArrays(RegistrationPools[_poolId].Keys, _values)
     {
-        RegistrationPools[_poolId].FeeProvider.PayFee{value: msg.value}(
+        FeeBaseHelper FeeProvider = RegistrationPools[_poolId].FeeProvider;
+        if (FeeProvider.FeeToken() != address(0) && FeeProvider.Fee() > 0) {
+            TransferInToken(FeeProvider.FeeToken(), msg.sender, FeeProvider.Fee());
+            IERC20(FeeProvider.FeeToken()).approve(address(FeeProvider), FeeProvider.Fee());
+        }
+        FeeProvider.PayFee{value: msg.value}(
             RegistrationPools[_poolId].FeeProvider.Fee()
         );
 

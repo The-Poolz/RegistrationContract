@@ -66,7 +66,7 @@ contract RegistrationPO is RegistrationManageable {
         onlyPoolOwner(_poolId)
     {
         FeeBaseHelper PoolFee = RegistrationPools[_poolId].FeeProvider;
-        PoolFee.WithdrawFee(payable(RegistrationPools[_poolId].Owner));
+        PoolFee.WithdrawFee(PoolFee.FeeToken(), payable(RegistrationPools[_poolId].Owner));
     }
 
     /// @notice It allows a pool owner to activate a pool

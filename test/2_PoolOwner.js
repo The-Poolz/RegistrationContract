@@ -98,10 +98,9 @@ contract("Admin settings", accounts => {
             const fee = '100000';
             const tx = await instance.Register(Token.address, fee, ["Key1", "Key2", "Key3", "Key4", "Key5"], { from: poolOwner });
             poolId = tx.logs[1].args.PoolId.toString();
-            const result = await instance.RegistrationPools(poolId);
             const oldBal = await Token.balanceOf(poolOwner);
             await Token.transfer(investor, fee);
-            await Token.approve(result['FeeProvider'], fee, { from: investor });
+            await Token.approve(instance.address, fee, { from: investor });
             await instance.SignUp(poolId, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: investor });
             await instance.WithdrawPoolFee(poolId, { from: poolOwner });
             const actualBalance = await Token.balanceOf(poolOwner);

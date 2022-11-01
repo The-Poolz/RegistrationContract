@@ -61,9 +61,8 @@ contract("User actions", accounts => {
         });
 
         it('should SignUp paying fee in ERC20', async () => {
-            const result = await instance.RegistrationPools(poolId3);
             await Token.transfer(accounts[4], fee, { from: ownerAddress });
-            await Token.approve(result['FeeProvider'], fee, { from: accounts[4] });
+            await Token.approve(instance.address, fee, { from: accounts[4] });
             const tx = await instance.SignUp(poolId3, ["Value1", "Value2", "Value3", "Value4", "Value5"], { from: accounts[4] });
             truffleAssert.eventEmitted(tx, 'NewRegistration');
         });
